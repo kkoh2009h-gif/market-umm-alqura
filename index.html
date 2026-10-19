@@ -79,7 +79,7 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
     <div class="fx-grid">
       <div class="fx-box"><div class="fx-label">السوق الموازي — شراء</div><div class="fx-value" id="fx-buy">جارٍ التحميل...</div><div class="fx-change" id="fx-buy-change">—</div></div>
       <div class="fx-box"><div class="fx-label">السوق الموازي — بيع</div><div class="fx-value" id="fx-sell">جارٍ التحميل...</div><div class="fx-change" id="fx-sell-change">—</div></div>
-      <div class="fx-box"><div class="fx-label">السعر الرسمي</div><div class="fx-value" id="fx-official">جارٍ التحميل...</div><div class="fx-change" id="fx-official-date">—</div></div>
+      <div class="fx-box"><div class="fx-label">السعر الرسمي</div><div class="fx-value" id="fx-official">جارٍ التحميل...</div><div class="fx-change" id="fx-official-change">—</div><div class="fx-change" id="fx-official-date">—</div></div>
     </div>
     <p class="fx-status" id="fx-status" aria-live="polite">يتم جلب آخر تحديث متاح...</p>
     <p class="fx-status">المصدر: <a class="fx-source" href="https://iraqsm.com/developers" target="_blank" rel="noopener">بيانات أسعار الصرف العراقية</a> • يتم فحص التحديث كل 5 دقائق</p>
@@ -122,7 +122,7 @@ async function loadDollarRate(){
     document.getElementById('fx-official').innerHTML=fmtIQD(officialRate)+' <small>د.ع</small>';
     fxChange('fx-buy-change',buy,'buy');
     fxChange('fx-sell-change',sell,'sell');
-    fxChange('fx-official-date',officialRate,'official');
+    fxChange('fx-official-change',officialRate,'official');
     const updated=parallel.publishedAt||data.asOf||payload.asOf||'';
     const stale=parallel.stale===true;
     status.textContent=(stale?'تنبيه: بيانات السوق قديمة • ':'آخر بيانات متاحة '+(updated?'بتاريخ '+new Date(updated).toLocaleString('ar-IQ',{dateStyle:'medium',timeStyle:'short'}):'')+' • ')+'آخر فحص: '+new Date().toLocaleTimeString('ar-IQ',{hour:'2-digit',minute:'2-digit'});
