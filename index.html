@@ -43,6 +43,10 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
 .item:before{content:"";position:absolute;top:-45%;left:-75%;width:45%;height:190%;transform:rotate(22deg);background:linear-gradient(90deg,transparent,#ffffff08,#ffffff30,#ffffff08,transparent);animation:cardShine 5.5s ease-in-out infinite;pointer-events:none}
 .item:nth-child(2):before{animation-delay:.5s}.item:nth-child(3):before{animation-delay:1s}.item:nth-child(4):before{animation-delay:1.5s}.item:nth-child(5):before{animation-delay:2s}.item:nth-child(6):before{animation-delay:2.5s}
 .item:hover{transform:translateY(-5px);border-color:#e4c76a;box-shadow:0 12px 32px #1746a225,inset 0 1px 0 #ffffff18}
+.item{cursor:pointer}
+.item:focus-visible{outline:3px solid #e4c76a;outline-offset:3px}
+.item.price-speaking{border-color:#e4c76a;box-shadow:0 0 22px #c8a94e66}
+
 .product-icon{height:clamp(35px,7vh,70px);display:grid;place-items:center;font-size:clamp(1.9rem,4vw,3.5rem);margin-bottom:1vh;filter:grayscale(1) brightness(1.25)}
 .name{font-size:clamp(.8rem,1.65vw,1.4rem);font-weight:700;line-height:1.4;min-height:2.7em;display:flex;align-items:center;justify-content:center}
 .detail{font-size:clamp(.65rem,1.2vw,1rem);color:#f2f2f2;margin:.4vh 0}
@@ -223,6 +227,32 @@ function playDeviceGreeting(phrase){
     if(welcomeAudioBtn)welcomeAudioBtn.textContent='🔊 تشغيل الترحيب';
   }
 }
+
+// النقر على بطاقة أي منتج ينطق اسمه وسعره.
+const productCards=document.querySelectorAll('.prices .item');
+productCards.forEach(card=>{
+  card.setAttribute('role','button');
+  card.setAttribute('tabindex','0');
+  const announcePrice=()=>{
+    if(!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)){
+      alert('فعّل خدمة تحويل النص إلى كلام من إعدادات الجهاز حتى تسمع السعر.');
+      return;
+    }
+    const product=card.querySelector('.name')?.textContent.trim()||'المنتج';
+    const detail=card.querySelector('.detail')?.textContent.trim()||'';
+    const price=card.querySelector('.price')?.textContent.replace(/\\s+/g,' ').trim()||'';
+    const spokenPrice=price.replace('د.ع','دينار عراقي').replace('3 بـ 1,000','ثلاث حبات بألف دينار عراقي');
+    speechSynthesis.cancel();
+    const utterance=new SpeechSynthesisUtterance(product+'. '+detail+'. السعر '+spokenPrice);
+    utterance.lang='ar';utterance.rate=.85;utterance.volume=1;
+    card.classList.add('price-speaking');
+    utterance.onend=()=>card.classList.remove('price-speaking');
+    utterance.onerror=()=>card.classList.remove('price-speaking');
+    speechSynthesis.speak(utterance);
+  };
+  card.addEventListener('click',announcePrice);
+  card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();announcePrice();}});
+});
 
 const readPricesBtn=document.getElementById('read-prices-btn');
 let priceReading=false;
