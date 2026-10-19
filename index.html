@@ -132,7 +132,7 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
   </header>
   <h2 class="heading">أسعار المواد الأساسية</h2>
   <section class="prices" aria-label="أسعار المواد الأساسية">
-    <article class="item"><div class="product-icon" aria-hidden="true">🥚</div><div class="name">البيض</div><div class="detail">الطبقة</div><div class="price">6,000 <span class="currency">د.ع</span></div></article>
+    <article class="item"><div class="product-icon" aria-hidden="true">🥚</div><div class="name">بيض المائدة</div><div class="detail">الطبقة</div><div class="price">6,000 <span class="currency">د.ع</span></div></article>
     <article class="item"><div class="product-icon" aria-hidden="true">🫗</div><div class="name">زيت الطبخ</div><div class="detail">900 مل</div><div class="price">3,000 <span class="currency">د.ع</span></div></article>
     <article class="item"><div class="product-icon" aria-hidden="true">🍚</div><div class="name">سكر</div><div class="detail">الكيلو</div><div class="price">1,500 <span class="currency">د.ع</span></div></article>
     <article class="item"><div class="product-icon" aria-hidden="true">🥫</div><div class="name">معجون جينو صغير</div><div class="detail">عبوة صغيرة</div><div class="price">1,250 <span class="currency">د.ع</span></div></article>
@@ -259,7 +259,7 @@ let priceReading=false;
 if(readPricesBtn)readPricesBtn.addEventListener('click',()=>{
   if(!window.speechSynthesis || !window.SpeechSynthesisUtterance){alert('فعّل خدمة تحويل النص إلى كلام من إعدادات الجهاز.');return;}
   if(priceReading || speechSynthesis.speaking){speechSynthesis.cancel();priceReading=false;readPricesBtn.textContent='🗣️ اقرأ الأسعار';return;}
-  const text='أهلاً وسهلاً بكم في ماركت أم القرى. البيض، الطبقة بستة آلاف دينار. زيت الطبخ، تسعمئة مل، بثلاثة آلاف دينار. السكر، الكيلو بألف وخمسمئة دينار. معجون جينو الصغير بألف ومئتين وخمسين دينار. معجون جينو الكبير بألفين وخمسمئة دينار. الإندومي، الواحدة بخمسمئة دينار، وثلاث حبات بألف دينار. حليب التونسا بثلاثة آلاف دينار. حفاظات الماس بثلاثة آلاف وسبعمئة وخمسين دينار. حفاظات هلا بيبي بثلاثة آلاف وسبعمئة وخمسين دينار. تمن حصة، الكيلو بألف دينار. تمن بسمتي، الكيلو بألفين ومئتين وخمسين دينار. راشي الرحمة بأربعة آلاف دينار. نورتونا بزيارتكم.';
+  const text='أهلاً وسهلاً بكم في ماركت أم القرى. بيض المائدة، الطبقة بستة آلاف دينار. زيت الطبخ، تسعمئة مل، بثلاثة آلاف دينار. السكر، الكيلو بألف وخمسمئة دينار. معجون جينو الصغير بألف ومئتين وخمسين دينار. معجون جينو الكبير بألفين وخمسمئة دينار. الإندومي، الواحدة بخمسمئة دينار، وثلاث حبات بألف دينار. حليب التونسا بثلاثة آلاف دينار. حفاظات الماس بثلاثة آلاف وسبعمئة وخمسين دينار. حفاظات هلا بيبي بثلاثة آلاف وسبعمئة وخمسين دينار. تمن حصة، الكيلو بألف دينار. تمن بسمتي، الكيلو بألفين ومئتين وخمسين دينار. راشي الرحمة بأربعة آلاف دينار. نورتونا بزيارتكم.';
   const u=new SpeechSynthesisUtterance(text);u.lang='ar';u.rate=.82;u.volume=1;
   u.onstart=()=>{priceReading=true;readPricesBtn.textContent='⏹ إيقاف قراءة الأسعار';};
   u.onend=()=>{priceReading=false;readPricesBtn.textContent='🗣️ اقرأ الأسعار';};
