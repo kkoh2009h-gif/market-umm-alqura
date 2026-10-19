@@ -177,20 +177,50 @@ function updateBaghdadClock(){
 updateBaghdadClock();
 setInterval(updateBaghdadClock,1000);
 
-// تشغيل عبارة الترحيب عند الضغط، حتى تعمل على المتصفحات التي تمنع الصوت التلقائي.
+// الصوت الأساسي ملف نطق عربي عبر الإنترنت، مع بديل صوت الجهاز عند تعذر تحميله.
 const welcomeAudioBtn=document.getElementById('welcome-audio-btn');
-if(welcomeAudioBtn)welcomeAudioBtn.addEventListener('click',()=>{
+let welcomeAudio=null;
+if(welcomeAudioBtn)welcomeAudioBtn.addEventListener('click',async()=>{
+  const phrase='مرحبا بكم في ماركت أم القرى';
+  welcomeAudioBtn.textContent='🔊 جارٍ تشغيل الترحيب...';
+  try{
+    if(welcomeAudio){welcomeAudio.pause();welcomeAudio.currentTime=0;}
+    const ttsUrl='https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=ar&q='+encodeURIComponent(phrase);
+    welcomeAudio=new Audio(ttsUrl);
+    welcomeAudio.preload='auto';
+    welcomeAudio.onended=()=>{welcomeAudioBtn.textContent='🔊 تشغيل الترحيب';};
+    welcomeAudio.onerror=()=>{playDeviceGreeting(phrase);};
+    await welcomeAudio.play();
+    welcomeAudioBtn.textContent='🔊 إيقاف الترحيب';
+    welcomeAudio.onended=()=>{welcomeAudioBtn.textContent='🔊 تشغيل الترحيب';};
+    welcomeAudioBtn.onclick=()=>{
+      if(welcomeAudio && !welcomeAudio.paused){welcomeAudio.pause();welcomeAudio.currentTime=0;welcomeAudioBtn.textContent='🔊 تشغيل الترحيب';}
+      else if(welcomeAudio){welcomeAudio.play().then(()=>welcomeAudioBtn.textContent='🔊 إيقاف الترحيب').catch(()=>playDeviceGreeting(phrase));}
+    };
+  }catch(err){
+    playDeviceGreeting(phrase);
+  }
+});
+function playDeviceGreeting(phrase){
   if(!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)){
-    alert('المتصفح لا يدعم الصوت؛ جرّب فتح الموقع بمتصفح Chrome.');
+    alert('تعذّر تشغيل الصوت. تأكد من اتصال الإنترنت ورفع صوت التلفزيون.');
+    if(welcomeAudioBtn)welcomeAudioBtn.textContent='🔊 تشغيل الترحيب';
     return;
   }
-  window.speechSynthesis.cancel();
-  const greeting=new SpeechSynthesisUtterance('مرحبا بكم في ماركت أم القرى');
-  greeting.lang='ar-SA';
-  greeting.rate=0.88;
-  greeting.pitch=1;
-  window.speechSynthesis.speak(greeting);
-});
+  try{
+    window.speechSynthesis.cancel();
+    const greeting=new SpeechSynthesisUtterance(phrase);
+    greeting.lang='ar';
+    greeting.rate=.85;
+    greeting.pitch=1;
+    greeting.onend=()=>{if(welcomeAudioBtn)welcomeAudioBtn.textContent='🔊 تشغيل الترحيب';};
+    greeting.onerror=()=>{alert('المتصفح لا يحتوي على صوت عربي جاهز. تأكد من اتصال الإنترنت أو إعدادات تحويل النص إلى كلام.');if(welcomeAudioBtn)welcomeAudioBtn.textContent='🔊 تشغيل الترحيب';};
+    window.speechSynthesis.speak(greeting);
+  }catch(e){
+    alert('تعذّر تشغيل الصوت. تأكد من إعدادات الصوت في الجهاز.');
+    if(welcomeAudioBtn)welcomeAudioBtn.textContent='🔊 تشغيل الترحيب';
+  }
+}
 
 document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='f'){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();}});
 document.addEventListener('click',()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.().catch(()=>{});},{once:true});
