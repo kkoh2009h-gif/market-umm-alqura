@@ -23,6 +23,7 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
 .brand-copy{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0}.welcome{margin:.5vh 0 1.2vh;color:#f4f8f4;font-size:clamp(.8rem,1.6vw,1.25rem)}
 .welcome-audio-btn{margin-top:5px;border:1px solid #c8a94e;border-radius:999px;padding:5px 12px;background:linear-gradient(135deg,#1746a2,#07142b);color:#fff;font:700 .78rem Tahoma,Arial,sans-serif;cursor:pointer;box-shadow:0 3px 10px #0005}
 .welcome-audio-btn:active{transform:scale(.97)}
+.read-prices-btn{margin-top:5px;border:1px solid #e4c76a;border-radius:999px;padding:6px 13px;background:linear-gradient(135deg,#b68b22,#6e4b08);color:#fff;font:800 .8rem Tahoma,Arial,sans-serif;cursor:pointer}
 
 .heading{font-size:clamp(1rem,2vw,1.7rem);font-weight:800;margin:0 0 1.2vh;color:#ffffff}
 .heading:after{content:"";display:block;width:100px;height:2px;background:linear-gradient(90deg,transparent,#1746a2,#e4c76a,#1746a2,transparent);margin:.8vh auto 0}
@@ -122,6 +123,7 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
       <h1>ماركت أم القرى</h1>
       <p class="welcome">أهلاً وسهلاً بكم</p>
       <button type="button" id="welcome-audio-btn" class="welcome-audio-btn">🔊 تشغيل الترحيب</button>
+      <button type="button" id="read-prices-btn" class="read-prices-btn">🗣️ اقرأ الأسعار</button>
     </div>
   </header>
   <h2 class="heading">أسعار المواد الأساسية</h2>
@@ -222,6 +224,18 @@ function playDeviceGreeting(phrase){
   }
 }
 
+const readPricesBtn=document.getElementById('read-prices-btn');
+let priceReading=false;
+if(readPricesBtn)readPricesBtn.addEventListener('click',()=>{
+  if(!window.speechSynthesis || !window.SpeechSynthesisUtterance){alert('فعّل خدمة تحويل النص إلى كلام من إعدادات الجهاز.');return;}
+  if(priceReading || speechSynthesis.speaking){speechSynthesis.cancel();priceReading=false;readPricesBtn.textContent='🗣️ اقرأ الأسعار';return;}
+  const text='أهلاً وسهلاً بكم في ماركت أم القرى. البيض، الطبقة بستة آلاف دينار. زيت الطبخ، تسعمئة مل، بثلاثة آلاف دينار. السكر، الكيلو بألف وخمسمئة دينار. معجون جينو الصغير بألف ومئتين وخمسين دينار. معجون جينو الكبير بألفين وخمسمئة دينار. الإندومي، الواحدة بخمسمئة دينار، وثلاث حبات بألف دينار. حليب التونسا بثلاثة آلاف دينار. حفاظات الماس بثلاثة آلاف وسبعمئة وخمسين دينار. حفاظات هلا بيبي بثلاثة آلاف وسبعمئة وخمسين دينار. تمن حصة، الكيلو بألف دينار. تمن بسمتي، الكيلو بألفين ومئتين وخمسين دينار. راشي الرحمة بأربعة آلاف دينار. نورتونا بزيارتكم.';
+  const u=new SpeechSynthesisUtterance(text);u.lang='ar';u.rate=.82;u.volume=1;
+  u.onstart=()=>{priceReading=true;readPricesBtn.textContent='⏹ إيقاف قراءة الأسعار';};
+  u.onend=()=>{priceReading=false;readPricesBtn.textContent='🗣️ اقرأ الأسعار';};
+  u.onerror=()=>{priceReading=false;readPricesBtn.textContent='🗣️ اقرأ الأسعار';alert('ما اشتغل الصوت العربي. فعّل خدمة تحويل النص إلى كلام في الجهاز.');};
+  speechSynthesis.cancel();speechSynthesis.speak(u);
+});
 document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='f'){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();}});
 document.addEventListener('click',()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.().catch(()=>{});},{once:true});
 
