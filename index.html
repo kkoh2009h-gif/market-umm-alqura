@@ -4,42 +4,54 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#000000">
-<title>ماركت أم القرى</title>
+<title>ماركت أم القرى | الأسعار</title>
 <style>
-:root{--white:#f7f7f7;--muted:#a9a9a9;--line:#343434}
+:root{--white:#f7f7f7;--muted:#aaa;--line:#383838}
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000;color:var(--white);font-family:Tahoma,Arial,sans-serif}
-body{display:grid;place-items:center;background:radial-gradient(ellipse at 50% 35%,#171717 0%,#080808 42%,#000 78%)}
-main{position:relative;width:100%;height:100%;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3vh 5vw;isolation:isolate}
-main:before{content:"";position:absolute;inset:5% 8%;border:1px solid #242424;border-radius:28px;pointer-events:none;z-index:-1;box-shadow:0 0 55px #ffffff08,inset 0 0 50px #ffffff04}
-main:after{content:"";position:absolute;left:12%;right:12%;bottom:12%;height:1px;background:linear-gradient(90deg,transparent,#555,transparent);z-index:-1}
-.logo-wrap{width:clamp(68px,11vh,125px);height:clamp(68px,11vh,125px);flex:0 0 auto;display:grid;place-items:center;margin-bottom:2.5vh;animation:float 4s ease-in-out infinite}
-.logo{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 14px #ffffff20)}
-h1{position:relative;z-index:1;margin:0;font-size:clamp(1.8rem,5.2vw,4.6rem);font-weight:900;letter-spacing:.01em;line-height:1.25;text-shadow:0 2px 22px #ffffff14}
-.rule{width:min(360px,45vw);height:2px;background:linear-gradient(90deg,transparent,#f0f0f0,transparent);margin:2.1vh 0;animation:glow 3.5s ease-in-out infinite}
-.welcome{font-size:clamp(1rem,2.5vw,2rem);color:#c9c9c9;margin:0 0 3vh}
-.hours{border:1px solid #454545;border-radius:18px;padding:1.8vh 4vw;background:linear-gradient(135deg,#161616,#050505);min-width:min(430px,78vw);box-shadow:0 10px 35px #000}
-.hours-label{font-size:clamp(.9rem,2vw,1.4rem);color:#aaa;margin-bottom:.7vh}
-.hours-time{font-size:clamp(1.25rem,3.5vw,2.5rem);font-weight:800;letter-spacing:.02em}
-.footer{position:absolute;bottom:7%;font-size:clamp(.8rem,1.6vw,1.1rem);color:#777;letter-spacing:.12em}
-.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#eee;margin-left:9px;box-shadow:0 0 12px #fff;animation:pulse 2s infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-@keyframes glow{0%,100%{opacity:.5;transform:scaleX(.92)}50%{opacity:1;transform:scaleX(1)}}
-@keyframes pulse{0%,100%{opacity:.45}50%{opacity:1}}
-@media (max-height:500px){.logo-wrap{width:62px;height:62px;margin-bottom:1vh}.rule{margin:1vh 0}.welcome{margin-bottom:1.5vh}.hours{padding:1vh 3vw}.footer{bottom:3%}main:before{inset:2% 5%}}
+body{background:radial-gradient(ellipse at 50% 25%,#191919 0%,#090909 48%,#000 82%)}
+main{position:relative;width:100%;height:100%;min-height:100svh;display:flex;flex-direction:column;align-items:center;text-align:center;padding:2.2vh 4vw 3vh;isolation:isolate;gap:0}
+main:before{content:"";position:absolute;inset:2.5% 3%;border:1px solid #292929;border-radius:24px;pointer-events:none;z-index:-1;box-shadow:inset 0 0 50px #ffffff03}
+.brand{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:0 0 auto}
+.logo{width:clamp(46px,8vh,82px);height:clamp(46px,8vh,82px);object-fit:contain;filter:drop-shadow(0 0 10px #ffffff18);animation:float 4s ease-in-out infinite}
+h1{margin:.2vh 0 0;font-size:clamp(1.45rem,3.6vw,3.2rem);line-height:1.2;font-weight:900}
+.welcome{margin:.5vh 0 1.2vh;color:#aaa;font-size:clamp(.8rem,1.6vw,1.25rem)}
+.heading{font-size:clamp(1rem,2vw,1.7rem);font-weight:800;margin:0 0 1.2vh;color:#eee}
+.heading:after{content:"";display:block;width:100px;height:2px;background:linear-gradient(90deg,transparent,#eee,transparent);margin:.8vh auto 0}
+.prices{width:100%;max-width:1450px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1.1vw;margin:0 auto}
+.item{min-width:0;min-height:0;border:1px solid #3a3a3a;border-radius:15px;background:linear-gradient(145deg,#171717,#050505);padding:1.8vh .7vw;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 8px 24px #0008;animation:appear .7s both}
+.item:nth-child(2){animation-delay:.08s}.item:nth-child(3){animation-delay:.16s}.item:nth-child(4){animation-delay:.24s}.item:nth-child(5){animation-delay:.32s}
+.product-icon{height:clamp(35px,7vh,70px);display:grid;place-items:center;font-size:clamp(1.9rem,4vw,3.5rem);margin-bottom:1vh;filter:grayscale(1)}
+.name{font-size:clamp(.8rem,1.65vw,1.4rem);font-weight:700;line-height:1.4;min-height:2.7em;display:flex;align-items:center;justify-content:center}
+.detail{font-size:clamp(.65rem,1.2vw,1rem);color:#aaa;margin:.4vh 0}
+.price{font-size:clamp(1rem,2.2vw,1.9rem);font-weight:900;white-space:nowrap;margin-top:.6vh}
+.currency{font-size:.58em;color:#bdbdbd}
+.hours{margin-top:auto;padding-top:1.8vh;font-size:clamp(.85rem,1.65vw,1.35rem);color:#d5d5d5}
+.hours strong{color:#fff}
+.footer{margin-top:.8vh;color:#686868;font-size:clamp(.65rem,1.05vw,.9rem)}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes appear{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(max-height:520px){main{padding:1vh 4vw}.logo{width:42px;height:42px}.welcome{margin:.3vh 0 .6vh}.heading{margin-bottom:.7vh}.heading:after{margin:.4vh auto 0}.item{padding:1vh .5vw}.product-icon{height:35px;margin-bottom:.4vh}.hours{padding-top:.8vh}.footer{margin-top:.3vh}}
+@media(max-width:600px){html,body{overflow:auto}main{height:auto;min-height:100svh;padding:18px 14px;gap:8px}.prices{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.item{padding:16px 8px}.logo{width:68px;height:68px}.name{font-size:1rem}.price{font-size:1.25rem}.hours{margin-top:12px}}
 </style>
 </head>
 <body>
-<main aria-label="ماركت أم القرى">
-  <div class="logo-wrap"><img class="logo" src="https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg" alt="شعار ريال مدريد"></div>
-  <h1>ماركت أم القرى</h1>
-  <div class="rule"></div>
-  <p class="welcome">أهلاً وسهلاً بكم</p>
-  <section class="hours">
-    <div class="hours-label">أوقات الدوام</div>
-    <div class="hours-time"><span class="dot"></span>من 8 صباحاً إلى 1 ليلاً</div>
+<main>
+  <header class="brand">
+    <img class="logo" src="https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg" alt="شعار ريال مدريد">
+    <h1>ماركت أم القرى</h1>
+    <p class="welcome">أهلاً وسهلاً بكم</p>
+  </header>
+  <h2 class="heading">أسعار المواد الأساسية</h2>
+  <section class="prices" aria-label="أسعار المواد الأساسية">
+    <article class="item"><div class="product-icon" aria-hidden="true">🥚</div><div class="name">البيض</div><div class="detail">الطبقة</div><div class="price">6,000 <span class="currency">د.ع</span></div></article>
+    <article class="item"><div class="product-icon" aria-hidden="true">🫗</div><div class="name">زيت الطبخ</div><div class="detail">900 مل</div><div class="price">3,000 <span class="currency">د.ع</span></div></article>
+    <article class="item"><div class="product-icon" aria-hidden="true">🍚</div><div class="name">سكر</div><div class="detail">الكيلو</div><div class="price">1,500 <span class="currency">د.ع</span></div></article>
+    <article class="item"><div class="product-icon" aria-hidden="true">🥫</div><div class="name">معجون جينو صغير</div><div class="detail">عبوة صغيرة</div><div class="price">1,250 <span class="currency">د.ع</span></div></article>
+    <article class="item"><div class="product-icon" aria-hidden="true">🥫</div><div class="name">معجون جينو كبير</div><div class="detail">عبوة كبيرة</div><div class="price">2,250 <span class="currency">د.ع</span></div></article>
   </section>
-  <div class="footer">نورتونا بزيارتكم</div>
+  <div class="hours">أوقات الدوام: <strong>من 8 صباحاً إلى 1 ليلاً</strong></div>
+  <div class="footer">نورتونا بزيارتكم • ماركت أم القرى</div>
 </main>
 <script>
 document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='f'){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();}});
