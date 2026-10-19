@@ -42,19 +42,6 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
 @media(max-height:520px){main{padding:1vh 4vw}.logo{width:42px;height:42px}.welcome{margin:.3vh 0 .6vh}.heading{margin-bottom:.7vh}.heading:after{margin:.4vh auto 0}.item{padding:1vh .5vw}.product-icon{height:35px;margin-bottom:.4vh}.hours{padding-top:.8vh}.footer{margin-top:.3vh}}
 @media(max-width:600px){html,body{overflow:auto}main{height:auto;min-height:100svh;padding:18px 14px;gap:8px}.prices{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.item{padding:16px 8px}.logo{width:68px;height:68px}.name{font-size:1rem}.price{font-size:1.25rem}.hours{margin-top:12px}}
 
-.fx-panel{width:100%;max-width:1000px;margin:1.5vh auto 0;padding:clamp(14px,2vw,24px);border:1px solid #2764b5;border-radius:18px;background:linear-gradient(145deg,#101a2b,#080b12 78%);box-shadow:0 8px 28px #0009,0 0 22px #1769ff18;text-align:center}
-.fx-title{margin:0 0 6px;color:#fff;font-size:clamp(1.1rem,2.2vw,1.7rem);font-weight:900}
-.fx-subtitle{margin:0 0 14px;color:#b8c9e5;font-size:clamp(.75rem,1.2vw,.95rem)}
-.fx-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.fx-box{padding:12px 8px;border:1px solid #303d52;border-radius:12px;background:#111722}
-.fx-label{font-size:clamp(.75rem,1.2vw,.95rem);color:#c5d2e6}
-.fx-value{font-size:clamp(1.1rem,2.6vw,1.8rem);font-weight:900;color:#fff;margin:6px 0;direction:ltr}
-.fx-value small{font-size:.48em;color:#91baff}
-.fx-change{font-size:.78rem;color:#aab6c9;min-height:1.2em}
-.fx-status{margin:12px 0 0;font-size:.78rem;color:#aab6c9}
-.fx-source{color:#8fb7ff;text-decoration:underline}
-@media(max-width:600px){.fx-panel{margin-top:14px}.fx-grid{gap:6px}.fx-box{padding:10px 4px}.fx-label{font-size:.72rem}.fx-value{font-size:1.05rem}.fx-change{font-size:.68rem}}
-
 </style>
 </head>
 <body>
@@ -73,17 +60,6 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
     <article class="item"><div class="product-icon" aria-hidden="true">🥫</div><div class="name">معجون جينو كبير</div><div class="detail">عبوة كبيرة</div><div class="price">2,500 <span class="currency">د.ع</span></div></article>
     <article class="item"><div class="product-icon" aria-hidden="true">🍜</div><div class="name">إندومي</div><div class="detail">الواحدة 500 د.ع</div><div class="price">3 بـ 1,000 <span class="currency">د.ع</span></div></article>
   </section>
-  <section class="fx-panel" aria-label="سعر الدولار مقابل الدينار العراقي">
-    <h2 class="fx-title">💵 سعر الدولار مقابل الدينار العراقي</h2>
-    <p class="fx-subtitle">السعر بالدينار العراقي لكل 1 دولار أمريكي</p>
-    <div class="fx-grid">
-      <div class="fx-box"><div class="fx-label">السوق الموازي — شراء</div><div class="fx-value" id="fx-buy">جارٍ التحميل...</div><div class="fx-change" id="fx-buy-change">—</div></div>
-      <div class="fx-box"><div class="fx-label">السوق الموازي — بيع</div><div class="fx-value" id="fx-sell">جارٍ التحميل...</div><div class="fx-change" id="fx-sell-change">—</div></div>
-      <div class="fx-box"><div class="fx-label">السعر الرسمي</div><div class="fx-value" id="fx-official">جارٍ التحميل...</div><div class="fx-change" id="fx-official-change">—</div><div class="fx-change" id="fx-official-date">—</div></div>
-    </div>
-    <p class="fx-status" id="fx-status" aria-live="polite">يتم جلب آخر تحديث متاح...</p>
-    <p class="fx-status">المصدر: <a class="fx-source" href="https://iraqsm.com/developers" target="_blank" rel="noopener">بيانات أسعار الصرف العراقية</a> • يتم فحص التحديث كل 5 دقائق</p>
-  </section>
   <div class="hours">أوقات الدوام: <strong>من 8 صباحاً إلى 1 ليلاً</strong></div>
   <div class="footer">نورتونا بزيارتكم • ماركت أم القرى</div>
 </main>
@@ -91,52 +67,7 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
 document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='f'){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();}});
 document.addEventListener('click',()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.().catch(()=>{});},{once:true});
 
-const FX_URL='https://iraqsm.com/data/fx.json';
-const fxLast={};
-const fmtIQD=n=>Number(n).toLocaleString('en-US',{maximumFractionDigits:2});
-function fxChange(id,value,key){
-  const el=document.getElementById(id);
-  const previous=fxLast[key];
-  if(Number.isFinite(previous) && Number(value)!==previous){
-    const rising=Number(value)>previous;
-    el.textContent=(rising?'▲ ارتفع ':'▼ انخفض ')+fmtIQD(Math.abs(Number(value)-previous))+' د.ع';
-    el.style.color=rising?'#ff8d8d':'#72e0a1';
-  }else{el.textContent='';}
-  fxLast[key]=Number(value);
-}
-async function loadDollarRate(){
-  const status=document.getElementById('fx-status');
-  try{
-    const response=await fetch(FX_URL+'?t='+Date.now(),{cache:'no-store'});
-    if(!response.ok) throw new Error('HTTP '+response.status);
-    const payload=await response.json();
-    const data=payload.data||payload;
-    const parallel=data.parallel||data.market||{};
-    const official=data.official||{};
-    const buy=parallel.buy??parallel.purchase;
-    const sell=parallel.sell??parallel.sale;
-    const officialRate=official.cbi??official.rate??data.officialRate;
-    if(!Number.isFinite(Number(buy))||!Number.isFinite(Number(sell))||!Number.isFinite(Number(officialRate))) throw new Error('بيانات السعر غير مكتملة');
-    document.getElementById('fx-buy').innerHTML=fmtIQD(buy)+' <small>د.ع</small>';
-    document.getElementById('fx-sell').innerHTML=fmtIQD(sell)+' <small>د.ع</small>';
-    document.getElementById('fx-official').innerHTML=fmtIQD(officialRate)+' <small>د.ع</small>';
-    fxChange('fx-buy-change',buy,'buy');
-    fxChange('fx-sell-change',sell,'sell');
-    fxChange('fx-official-change',officialRate,'official');
-    const updated=parallel.publishedAt||data.asOf||payload.asOf||'';
-    const stale=parallel.stale===true;
-    status.textContent=(stale?'تنبيه: بيانات السوق قديمة • ':'آخر بيانات متاحة '+(updated?'بتاريخ '+new Date(updated).toLocaleString('ar-IQ',{dateStyle:'medium',timeStyle:'short'}):'')+' • ')+'آخر فحص: '+new Date().toLocaleTimeString('ar-IQ',{hour:'2-digit',minute:'2-digit'});
-    status.style.color=stale?'#ffcb7d':'#aab6c9';
-    document.getElementById('fx-official-date').textContent=official.confirmed?'تاريخ السعر الرسمي: '+official.confirmed:'السعر الرسمي المنشور';
-  }catch(error){
-    status.textContent='تعذّر جلب السعر حالياً. جرّب تحديث الصفحة لاحقاً.';
-    status.style.color='#ffcb7d';
-    ['fx-buy','fx-sell','fx-official'].forEach(id=>{if(document.getElementById(id).textContent==='جارٍ التحميل...')document.getElementById(id).textContent='غير متاح';});
-    console.error('FX update failed:',error);
-  }
-}
-loadDollarRate();
-setInterval(loadDollarRate,5*60*1000);
+
 </script>
 </body>
 </html>
