@@ -10,7 +10,7 @@
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000;color:var(--white);font-family:Tahoma,Arial,sans-serif}
 body{background:radial-gradient(ellipse at 50% 15%,#183a70 0%,#08152b 42%,#02050c 82%)}
-main{position:relative;width:100%;height:100%;min-height:100svh;display:flex;flex-direction:column;align-items:center;text-align:center;padding:4.5vh 4vw 3vh;isolation:isolate;gap:0}
+main{position:relative;width:100%;height:100%;min-height:100svh;display:flex;flex-direction:column;align-items:center;text-align:center;padding:2vh 3vw 1.5vh;isolation:isolate;gap:0;justify-content:space-evenly}
 main:before{content:"";position:absolute;inset:2.5% 3%;border:2px solid #c8a94e;border-radius:24px;pointer-events:none;z-index:-1;box-shadow:inset 0 0 60px #ffffff08,0 0 24px #1746a218}
 .baghdad-clock{position:absolute;top:3.3vh;left:5.5%;z-index:8;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 15px;border:1px solid #c8a94e;border-radius:13px;background:linear-gradient(145deg,#102b56ee,#050914ee);box-shadow:0 0 18px #c8a94e33;font-variant-numeric:tabular-nums;min-width:145px}
 .clock-label{font-size:clamp(.65rem,.9vw,.85rem);color:#e4c76a;font-weight:700}
@@ -33,8 +33,8 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
 
 
 
-.prices{width:100%;max-width:1450px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1vw;margin:0 auto}
-.item{position:relative;overflow:hidden;min-width:0;min-height:0;border:2px solid #244a86;border-radius:15px;background:linear-gradient(145deg,#102b56,#050914 75%);padding:1.8vh .7vw;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 8px 24px #000b,inset 0 1px 0 #ffffff10;animation:cardIn .75s cubic-bezier(.2,.8,.2,1) both;transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
+.prices{width:100%;max-width:1700px;flex:1 1 auto;min-height:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:.65vw;margin:0 auto;align-self:stretch}
+.item{position:relative;overflow:hidden;min-width:0;min-height:0;border:2px solid #244a86;border-radius:15px;background:linear-gradient(145deg,#102b56,#050914 75%);padding:1vh .55vw;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 8px 24px #000b,inset 0 1px 0 #ffffff10;animation:cardIn .75s cubic-bezier(.2,.8,.2,1) both;transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
 .item:nth-child(2){animation-delay:.12s}.item:nth-child(3){animation-delay:.24s}.item:nth-child(4){animation-delay:.36s}.item:nth-child(5){animation-delay:.48s}.item:nth-child(6){animation-delay:.6s}
 .item:before{content:"";position:absolute;top:-45%;left:-75%;width:45%;height:190%;transform:rotate(22deg);background:linear-gradient(90deg,transparent,#ffffff08,#ffffff30,#ffffff08,transparent);animation:cardShine 5.5s ease-in-out infinite;pointer-events:none}
 .item:nth-child(2):before{animation-delay:.5s}.item:nth-child(3):before{animation-delay:1s}.item:nth-child(4):before{animation-delay:1.5s}.item:nth-child(5):before{animation-delay:2s}.item:nth-child(6):before{animation-delay:2.5s}
@@ -79,7 +79,7 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
 @media(max-width:600px){.azkar-dialog{padding:22px 13px}.azkar-card{padding:11px}.azkar-card p{font-size:.92rem}}
 
 @media(min-width:601px){
-  main{padding:1vh 4vw 7vh}
+  main{padding:1vh 3vw 1vh;justify-content:space-between}
   .logo{width:clamp(82px,12vh,140px);height:clamp(82px,12vh,140px);position:absolute;right:4%;top:4vh}\n  .brand{max-width:72%;margin-top:1vh}
 
 
@@ -91,13 +91,13 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
   .welcome{margin:.2vh 0 .35vh}
   .heading{margin-bottom:.5vh}
   .heading:after{margin:.3vh auto 0}
-  .prices{gap:.55vw}
-  .item{padding:.7vh .45vw;border-radius:12px}
+  .prices{gap:.65vw;flex:1 1 auto;min-height:0;grid-template-rows:repeat(2,minmax(0,1fr))}
+  .item{padding:.45vh .4vw;border-radius:12px}
   .product-icon{height:clamp(26px,4.3vh,42px);font-size:clamp(1.5rem,3vh,2.5rem);margin-bottom:.25vh}
   .name{font-size:clamp(.75rem,1.35vw,1.15rem);min-height:2.1em;line-height:1.25}
   .detail{font-size:clamp(.6rem,.95vw,.85rem);margin:.2vh 0}
   .price{font-size:clamp(.95rem,1.8vw,1.5rem);margin-top:.25vh}
-  .azkar-panel{position:absolute;left:5%;right:5%;bottom:2.1vh;width:90%;margin:0;padding:7px 16px;border-radius:12px;z-index:5;background:linear-gradient(90deg,#07142bf5,#12356bf5,#07142bf5)}
+  .azkar-panel{position:relative;left:auto;right:auto;bottom:auto;flex:0 0 auto;width:100%;max-width:1700px;margin:0;padding:5px 12px;border-radius:12px;z-index:5;background:linear-gradient(90deg,#07142bf5,#12356bf5,#07142bf5)}
   .azkar-label{font-size:clamp(.68rem,.9vw,.82rem);margin:0}
   .azkar-text{font-size:clamp(1rem,1.8vw,1.4rem);line-height:1.35;min-height:0}
   .azkar-note{font-size:clamp(.65rem,.85vw,.78rem);margin:2px 0 0}
