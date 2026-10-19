@@ -23,6 +23,16 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
 .brand-copy{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0}.welcome{margin:.5vh 0 1.2vh;color:#f4f8f4;font-size:clamp(.8rem,1.6vw,1.25rem)}
 .heading{font-size:clamp(1rem,2vw,1.7rem);font-weight:800;margin:0 0 1.2vh;color:#ffffff}
 .heading:after{content:"";display:block;width:100px;height:2px;background:linear-gradient(90deg,transparent,#1746a2,#e4c76a,#1746a2,transparent);margin:.8vh auto 0}
+.clasico-panel{width:100%;max-width:1050px;margin:.8vh auto 1.1vh;padding:clamp(7px,1.1vh,13px) 16px;border:1px solid #c8a94e;border-radius:16px;background:linear-gradient(100deg,#07142bf2,#12356bf2,#07142bf2);box-shadow:0 0 18px #1746a225}
+.clasico-teams{display:flex;align-items:center;justify-content:center;gap:clamp(10px,2vw,28px)}
+.team-crest{width:clamp(35px,5vh,58px);height:clamp(35px,5vh,58px);object-fit:contain;filter:drop-shadow(0 0 6px #c8a94e55)}
+.clasico-info{min-width:0}
+.clasico-title{font-size:clamp(.75rem,1.1vw,1rem);font-weight:900;color:#e4c76a}
+.clasico-match{font-size:clamp(1rem,1.8vw,1.45rem);font-weight:900;color:#fff;margin:2px 0}
+.clasico-match span{color:#e4c76a;margin:0 8px;font-size:.8em}
+.clasico-date{font-size:clamp(.65rem,.95vw,.88rem);color:#dce8ff}
+.clasico-countdown{font-size:clamp(.9rem,1.45vw,1.2rem);font-weight:900;color:#e4c76a;margin-top:3px;font-variant-numeric:tabular-nums}
+@media(max-width:600px){.clasico-panel{margin:5px auto 10px;padding:10px 6px}.clasico-teams{gap:8px}.team-crest{width:38px;height:38px}.clasico-date{font-size:.68rem}.clasico-countdown{font-size:.9rem}}
 .prices{width:100%;max-width:1450px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1vw;margin:0 auto}
 .item{position:relative;overflow:hidden;min-width:0;min-height:0;border:2px solid #244a86;border-radius:15px;background:linear-gradient(145deg,#102b56,#050914 75%);padding:1.8vh .7vw;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 8px 24px #000b,inset 0 1px 0 #ffffff10;animation:cardIn .75s cubic-bezier(.2,.8,.2,1) both;transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
 .item:nth-child(2){animation-delay:.12s}.item:nth-child(3){animation-delay:.24s}.item:nth-child(4){animation-delay:.36s}.item:nth-child(5){animation-delay:.48s}.item:nth-child(6){animation-delay:.6s}
@@ -87,6 +97,18 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
       <p class="welcome">أهلاً وسهلاً بكم</p>
     </div>
   </header>
+  <section class="clasico-panel" aria-label="العد التنازلي للكلاسيكو">
+    <div class="clasico-teams">
+      <img src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg" alt="شعار برشلونة" class="team-crest">
+      <div class="clasico-info">
+        <div class="clasico-title">🔥 موعد الكلاسيكو 🔥</div>
+        <div class="clasico-match">برشلونة <span>VS</span> ريال مدريد</div>
+        <div class="clasico-date">الأحد 25 أكتوبر 2026 — الساعة 10:00 مساءً بتوقيت بغداد</div>
+        <div class="clasico-countdown" id="clasico-countdown">جارٍ حساب الوقت المتبقي...</div>
+      </div>
+      <img src="https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg" alt="شعار ريال مدريد" class="team-crest">
+    </div>
+  </section>
   <h2 class="heading">أسعار المواد الأساسية</h2>
   <section class="prices" aria-label="أسعار المواد الأساسية">
     <article class="item"><div class="product-icon" aria-hidden="true">🥚</div><div class="name">البيض</div><div class="detail">الطبقة</div><div class="price">6,000 <span class="currency">د.ع</span></div></article>
@@ -111,6 +133,21 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
   <div class="footer">نورتونا بزيارتكم • ماركت أم القرى</div>
 </main>
 <script>
+const clasicoKickoff = new Date('2026-10-25T19:00:00Z');
+function updateClasicoCountdown(){
+  const el=document.getElementById('clasico-countdown');
+  if(!el)return;
+  const diff=clasicoKickoff.getTime()-Date.now();
+  if(diff<=0){el.textContent='انطلقت المباراة أو انتهى موعدها';return;}
+  const days=Math.floor(diff/86400000);
+  const hours=Math.floor((diff%86400000)/3600000);
+  const minutes=Math.floor((diff%3600000)/60000);
+  const seconds=Math.floor((diff%60000)/1000);
+  el.textContent=(days?days+' يوم • ':'')+hours+' ساعة • '+minutes+' دقيقة • '+seconds+' ثانية';
+}
+updateClasicoCountdown();
+setInterval(updateClasicoCountdown,1000);
+
 function updateBaghdadClock(){
   const now=new Date();
   const time=new Intl.DateTimeFormat('ar-IQ',{timeZone:'Asia/Baghdad',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true}).format(now);
