@@ -10,13 +10,13 @@
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000;color:var(--white);font-family:Tahoma,Arial,sans-serif}
 body{background:radial-gradient(ellipse at 50% 15%,#183a70 0%,#08152b 42%,#02050c 82%)}
-main{position:relative;width:100%;height:100%;min-height:100svh;display:flex;flex-direction:column;align-items:center;text-align:center;padding:2.2vh 4vw 3vh;isolation:isolate;gap:0}
+main{position:relative;width:100%;height:100%;min-height:100svh;display:flex;flex-direction:column;align-items:center;text-align:center;padding:4.5vh 4vw 3vh;isolation:isolate;gap:0}
 main:before{content:"";position:absolute;inset:2.5% 3%;border:2px solid #c8a94e;border-radius:24px;pointer-events:none;z-index:-1;box-shadow:inset 0 0 60px #ffffff08,0 0 24px #1746a218}
 .baghdad-clock{position:absolute;top:3.3vh;left:5.5%;z-index:8;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 15px;border:1px solid #c8a94e;border-radius:13px;background:linear-gradient(145deg,#102b56ee,#050914ee);box-shadow:0 0 18px #c8a94e33;font-variant-numeric:tabular-nums;min-width:145px}
 .clock-label{font-size:clamp(.65rem,.9vw,.85rem);color:#e4c76a;font-weight:700}
 .clock-time{font-size:clamp(1.1rem,2vw,1.7rem);font-weight:900;color:#fff;letter-spacing:.04em;text-shadow:0 0 12px #1746a266;direction:ltr}
 .clock-date{font-size:clamp(.62rem,.85vw,.8rem);color:#e4eaf2}
-.brand{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:clamp(10px,2vw,28px);flex:0 0 auto;max-width:78%;margin-inline:auto}
+.brand{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:clamp(10px,2vw,28px);flex:0 0 auto;max-width:78%;margin-inline:auto;margin-top:1.5vh}
 .logo{width:clamp(82px,13vh,150px);height:clamp(82px,13vh,150px);object-fit:contain;flex:0 0 auto;filter:drop-shadow(0 0 18px #c8a94e88);animation:float 4s ease-in-out infinite}
 h1{position:relative;margin:.2vh 0 0;font-size:clamp(1.8rem,4.2vw,3.8rem);line-height:1.2;font-weight:900;letter-spacing:.02em;background:linear-gradient(100deg,#fff 0%,#dce8ff 22%,#fff 42%,#fff 58%,#e4c76a 78%,#fff 100%);background-size:220% auto;background-clip:text;-webkit-background-clip:text;color:transparent;animation:titleShine 5s linear infinite;filter:drop-shadow(0 0 12px #1746a255)} 
 h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border-radius:10px;background:linear-gradient(90deg,transparent,#1746a2,#e4c76a,#1746a2,transparent);transform-origin:center;animation:underlinePulse 2.8s ease-in-out infinite}
@@ -44,7 +44,7 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
 @keyframes cardShine{0%,18%{left:-75%}55%,100%{left:135%}}
 @media(prefers-reduced-motion:reduce){h1,.item,.item:before,h1:after{animation:none!important;transition:none!important}}
 @media(max-height:520px){main{padding:1vh 4vw}.logo{width:68px;height:68px}.welcome{margin:.3vh 0 .6vh}.heading{margin-bottom:.7vh}.heading:after{margin:.4vh auto 0}.item{padding:1vh .5vw}.product-icon{height:35px;margin-bottom:.4vh}.hours{padding-top:.8vh}.footer{margin-top:.3vh}}
-@media(max-width:600px){html,body{overflow:auto}main{height:auto;min-height:100svh;padding:18px 14px;gap:8px}.brand{max-width:100%;gap:8px}.logo{width:68px;height:68px}h1{font-size:clamp(1.35rem,6vw,2rem)}.baghdad-clock{position:relative;top:auto;left:auto;align-self:center;min-width:135px;margin-bottom:2px;padding:7px 14px}.prices{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.item{padding:16px 8px}.logo{width:68px;height:68px}.name{font-size:1rem}.price{font-size:1.25rem}.hours{margin-top:12px}}
+@media(max-width:600px){html,body{overflow:auto}main{height:auto;min-height:100svh;padding:18px 14px;gap:8px}.brand{max-width:100%;gap:8px;margin-top:0}.logo{width:68px;height:68px;position:static}h1{font-size:clamp(1.35rem,6vw,2rem)}.baghdad-clock{position:relative;top:auto;left:auto;align-self:center;min-width:135px;margin-bottom:2px;padding:7px 14px}.prices{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.item{padding:16px 8px}.logo{width:68px;height:68px}.name{font-size:1rem}.price{font-size:1.25rem}.hours{margin-top:12px}}
 
 
 .azkar-panel{width:100%;max-width:1000px;margin:1.5vh auto 0;padding:clamp(14px,2vw,22px);border:1px solid #c8a94e;border-radius:18px;background:linear-gradient(145deg,#102b56,#050914 78%);box-shadow:0 8px 26px #0009,0 0 20px #1746a218;text-align:center}
@@ -54,7 +54,7 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
 @media(max-width:600px){.azkar-panel{margin-top:14px;padding:14px}.azkar-text{font-size:1.05rem}}
 @media(min-width:601px){
   main{padding:1vh 4vw 7vh}
-  .logo{width:clamp(82px,12vh,140px);height:clamp(82px,12vh,140px)}
+  .logo{width:clamp(82px,12vh,140px);height:clamp(82px,12vh,140px);position:absolute;right:4%;top:4vh}\n  .brand{max-width:72%;margin-top:2vh}
   .welcome{margin:.2vh 0 .5vh}
   .heading{margin-bottom:.5vh}
   .heading:after{margin:.3vh auto 0}
