@@ -6,34 +6,34 @@
 <meta name="theme-color" content="#000000">
 <title>ماركت أم القرى | الأسعار</title>
 <style>
-:root{--white:#ffffff;--muted:#e4eaf2;--line:#3c5748;--blue:#e32636}
+:root{--white:#ffffff;--muted:#e4eaf2;--line:#d4af37;--blue:#1746a2}
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000;color:var(--white);font-family:Tahoma,Arial,sans-serif}
-body{background:radial-gradient(ellipse at 50% 20%,#1b0508 0%,#09090b 52%,#000 84%)}
+body{background:radial-gradient(ellipse at 50% 15%,#183a70 0%,#08152b 42%,#02050c 82%)}
 main{position:relative;width:100%;height:100%;min-height:100svh;display:flex;flex-direction:column;align-items:center;text-align:center;padding:2.2vh 4vw 3vh;isolation:isolate;gap:0}
-main:before{content:"";position:absolute;inset:2.5% 3%;border:2px solid #63202a;border-radius:24px;pointer-events:none;z-index:-1;box-shadow:inset 0 0 60px #ffffff08,0 0 24px #e3263618}
-.baghdad-clock{position:absolute;top:3.3vh;left:5.5%;z-index:8;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 15px;border:1px solid #e32636;border-radius:13px;background:linear-gradient(145deg,#24080cdd,#050505ee);box-shadow:0 0 18px #e3263622;font-variant-numeric:tabular-nums;min-width:145px}
-.clock-label{font-size:clamp(.65rem,.9vw,.85rem);color:#ffb8bf;font-weight:700}
-.clock-time{font-size:clamp(1.1rem,2vw,1.7rem);font-weight:900;color:#fff;letter-spacing:.04em;text-shadow:0 0 12px #e3263666;direction:ltr}
+main:before{content:"";position:absolute;inset:2.5% 3%;border:2px solid #c8a94e;border-radius:24px;pointer-events:none;z-index:-1;box-shadow:inset 0 0 60px #ffffff08,0 0 24px #1746a218}
+.baghdad-clock{position:absolute;top:3.3vh;left:5.5%;z-index:8;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 15px;border:1px solid #c8a94e;border-radius:13px;background:linear-gradient(145deg,#102b56ee,#050914ee);box-shadow:0 0 18px #c8a94e33;font-variant-numeric:tabular-nums;min-width:145px}
+.clock-label{font-size:clamp(.65rem,.9vw,.85rem);color:#e4c76a;font-weight:700}
+.clock-time{font-size:clamp(1.1rem,2vw,1.7rem);font-weight:900;color:#fff;letter-spacing:.04em;text-shadow:0 0 12px #1746a266;direction:ltr}
 .clock-date{font-size:clamp(.62rem,.85vw,.8rem);color:#e4eaf2}
 .brand{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:0 0 auto}
-.logo{width:clamp(46px,8vh,82px);height:clamp(46px,8vh,82px);object-fit:contain;filter:drop-shadow(0 0 16px #e3263655);animation:float 4s ease-in-out infinite}
-h1{position:relative;margin:.2vh 0 0;font-size:clamp(1.45rem,3.6vw,3.2rem);line-height:1.2;font-weight:900;letter-spacing:.02em;background:linear-gradient(100deg,#fff 0%,#ffb8bf 22%,#fff 42%,#fff 58%,#ff5b67 78%,#fff 100%);background-size:220% auto;background-clip:text;-webkit-background-clip:text;color:transparent;animation:titleShine 5s linear infinite;filter:drop-shadow(0 0 12px #e3263655)} 
-h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border-radius:10px;background:linear-gradient(90deg,transparent,#e32636,#fff2c4,#e32636,transparent);transform-origin:center;animation:underlinePulse 2.8s ease-in-out infinite}
+.logo{width:clamp(46px,8vh,82px);height:clamp(46px,8vh,82px);object-fit:contain;filter:drop-shadow(0 0 16px #c8a94e66);animation:float 4s ease-in-out infinite}
+h1{position:relative;margin:.2vh 0 0;font-size:clamp(1.45rem,3.6vw,3.2rem);line-height:1.2;font-weight:900;letter-spacing:.02em;background:linear-gradient(100deg,#fff 0%,#dce8ff 22%,#fff 42%,#fff 58%,#e4c76a 78%,#fff 100%);background-size:220% auto;background-clip:text;-webkit-background-clip:text;color:transparent;animation:titleShine 5s linear infinite;filter:drop-shadow(0 0 12px #1746a255)} 
+h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border-radius:10px;background:linear-gradient(90deg,transparent,#1746a2,#e4c76a,#1746a2,transparent);transform-origin:center;animation:underlinePulse 2.8s ease-in-out infinite}
 .welcome{margin:.5vh 0 1.2vh;color:#f4f8f4;font-size:clamp(.8rem,1.6vw,1.25rem)}
 .heading{font-size:clamp(1rem,2vw,1.7rem);font-weight:800;margin:0 0 1.2vh;color:#ffffff}
-.heading:after{content:"";display:block;width:100px;height:2px;background:linear-gradient(90deg,transparent,#e32636,#ffffff,#e32636,transparent);margin:.8vh auto 0}
+.heading:after{content:"";display:block;width:100px;height:2px;background:linear-gradient(90deg,transparent,#1746a2,#e4c76a,#1746a2,transparent);margin:.8vh auto 0}
 .prices{width:100%;max-width:1450px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1vw;margin:0 auto}
-.item{position:relative;overflow:hidden;min-width:0;min-height:0;border:2px solid #3b5948;border-radius:15px;background:linear-gradient(145deg,#2a0a0e,#09090b 75%);padding:1.8vh .7vw;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 8px 24px #000b,inset 0 1px 0 #ffffff10;animation:cardIn .75s cubic-bezier(.2,.8,.2,1) both;transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
+.item{position:relative;overflow:hidden;min-width:0;min-height:0;border:2px solid #244a86;border-radius:15px;background:linear-gradient(145deg,#102b56,#050914 75%);padding:1.8vh .7vw;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 8px 24px #000b,inset 0 1px 0 #ffffff10;animation:cardIn .75s cubic-bezier(.2,.8,.2,1) both;transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
 .item:nth-child(2){animation-delay:.12s}.item:nth-child(3){animation-delay:.24s}.item:nth-child(4){animation-delay:.36s}.item:nth-child(5){animation-delay:.48s}.item:nth-child(6){animation-delay:.6s}
 .item:before{content:"";position:absolute;top:-45%;left:-75%;width:45%;height:190%;transform:rotate(22deg);background:linear-gradient(90deg,transparent,#ffffff08,#ffffff30,#ffffff08,transparent);animation:cardShine 5.5s ease-in-out infinite;pointer-events:none}
 .item:nth-child(2):before{animation-delay:.5s}.item:nth-child(3):before{animation-delay:1s}.item:nth-child(4):before{animation-delay:1.5s}.item:nth-child(5):before{animation-delay:2s}.item:nth-child(6):before{animation-delay:2.5s}
-.item:hover{transform:translateY(-5px);border-color:#ff5b67;box-shadow:0 12px 32px #e3263625,inset 0 1px 0 #ffffff18}
+.item:hover{transform:translateY(-5px);border-color:#e4c76a;box-shadow:0 12px 32px #1746a225,inset 0 1px 0 #ffffff18}
 .product-icon{height:clamp(35px,7vh,70px);display:grid;place-items:center;font-size:clamp(1.9rem,4vw,3.5rem);margin-bottom:1vh;filter:grayscale(1) brightness(1.25)}
 .name{font-size:clamp(.8rem,1.65vw,1.4rem);font-weight:700;line-height:1.4;min-height:2.7em;display:flex;align-items:center;justify-content:center}
 .detail{font-size:clamp(.65rem,1.2vw,1rem);color:#f2f2f2;margin:.4vh 0}
-.price{font-size:clamp(1rem,2.2vw,1.9rem);font-weight:900;white-space:nowrap;margin-top:.6vh;color:#ffffff;text-shadow:0 0 15px #e3263666}
-.currency{font-size:.58em;color:#ff9aa3}
+.price{font-size:clamp(1rem,2.2vw,1.9rem);font-weight:900;white-space:nowrap;margin-top:.6vh;color:#ffffff;text-shadow:0 0 15px #1746a266}
+.currency{font-size:.58em;color:#e4c76a}
 .hours{margin-top:auto;padding-top:1.8vh;font-size:clamp(.85rem,1.65vw,1.35rem);color:#f4f8f4}
 .hours strong{color:#fff}
 .footer{margin-top:.8vh;color:#e6e6e6;font-size:clamp(.65rem,1.05vw,.9rem)}
@@ -47,10 +47,10 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
 @media(max-width:600px){html,body{overflow:auto}main{height:auto;min-height:100svh;padding:18px 14px;gap:8px}.baghdad-clock{position:relative;top:auto;left:auto;align-self:center;min-width:135px;margin-bottom:2px;padding:7px 14px}.prices{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.item{padding:16px 8px}.logo{width:68px;height:68px}.name{font-size:1rem}.price{font-size:1.25rem}.hours{margin-top:12px}}
 
 
-.azkar-panel{width:100%;max-width:1000px;margin:1.5vh auto 0;padding:clamp(14px,2vw,22px);border:1px solid #b91c2b;border-radius:18px;background:linear-gradient(145deg,#260a0e,#09090b 78%);box-shadow:0 8px 26px #0009,0 0 20px #e3263618;text-align:center}
-.azkar-label{color:#ffb8bf;font-size:.8rem;font-weight:800;margin:0 0 8px}
+.azkar-panel{width:100%;max-width:1000px;margin:1.5vh auto 0;padding:clamp(14px,2vw,22px);border:1px solid #c8a94e;border-radius:18px;background:linear-gradient(145deg,#102b56,#050914 78%);box-shadow:0 8px 26px #0009,0 0 20px #1746a218;text-align:center}
+.azkar-label{color:#e4c76a;font-size:.8rem;font-weight:800;margin:0 0 8px}
 .azkar-text{font-size:clamp(1.05rem,2.3vw,1.65rem);font-weight:800;line-height:1.9;color:#fff;margin:0 auto;max-width:850px;min-height:3.8em;display:flex;align-items:center;justify-content:center}
-.azkar-note{color:#aab6c9;font-size:.78rem;margin:8px 0 0}
+.azkar-note{color:#c9d6ed;font-size:.78rem;margin:8px 0 0}
 @media(max-width:600px){.azkar-panel{margin-top:14px;padding:14px}.azkar-text{font-size:1.05rem}}
 @media(min-width:601px){
   main{padding:1vh 4vw 7vh}
@@ -64,7 +64,7 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
   .name{font-size:clamp(.75rem,1.35vw,1.15rem);min-height:2.1em;line-height:1.25}
   .detail{font-size:clamp(.6rem,.95vw,.85rem);margin:.2vh 0}
   .price{font-size:clamp(.95rem,1.8vw,1.5rem);margin-top:.25vh}
-  .azkar-panel{position:absolute;left:5%;right:5%;bottom:2.1vh;width:90%;margin:0;padding:7px 16px;border-radius:12px;z-index:5;background:linear-gradient(90deg,#19070af5,#300b11f5,#19070af5)}
+  .azkar-panel{position:absolute;left:5%;right:5%;bottom:2.1vh;width:90%;margin:0;padding:7px 16px;border-radius:12px;z-index:5;background:linear-gradient(90deg,#07142bf5,#12356bf5,#07142bf5)}
   .azkar-label{font-size:clamp(.68rem,.9vw,.82rem);margin:0}
   .azkar-text{font-size:clamp(1rem,1.8vw,1.4rem);line-height:1.35;min-height:0}
   .azkar-note{font-size:clamp(.65rem,.85vw,.78rem);margin:2px 0 0}
