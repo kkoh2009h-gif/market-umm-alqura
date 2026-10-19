@@ -16,11 +16,11 @@ main:before{content:"";position:absolute;inset:2.5% 3%;border:2px solid #c8a94e;
 .clock-label{font-size:clamp(.65rem,.9vw,.85rem);color:#e4c76a;font-weight:700}
 .clock-time{font-size:clamp(1.1rem,2vw,1.7rem);font-weight:900;color:#fff;letter-spacing:.04em;text-shadow:0 0 12px #1746a266;direction:ltr}
 .clock-date{font-size:clamp(.62rem,.85vw,.8rem);color:#e4eaf2}
-.brand{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:0 0 auto}
-.logo{width:clamp(46px,8vh,82px);height:clamp(46px,8vh,82px);object-fit:contain;filter:drop-shadow(0 0 16px #c8a94e66);animation:float 4s ease-in-out infinite}
-h1{position:relative;margin:.2vh 0 0;font-size:clamp(1.45rem,3.6vw,3.2rem);line-height:1.2;font-weight:900;letter-spacing:.02em;background:linear-gradient(100deg,#fff 0%,#dce8ff 22%,#fff 42%,#fff 58%,#e4c76a 78%,#fff 100%);background-size:220% auto;background-clip:text;-webkit-background-clip:text;color:transparent;animation:titleShine 5s linear infinite;filter:drop-shadow(0 0 12px #1746a255)} 
+.brand{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:clamp(10px,2vw,28px);flex:0 0 auto;max-width:78%;margin-inline:auto}
+.logo{width:clamp(82px,13vh,150px);height:clamp(82px,13vh,150px);object-fit:contain;flex:0 0 auto;filter:drop-shadow(0 0 18px #c8a94e88);animation:float 4s ease-in-out infinite}
+h1{position:relative;margin:.2vh 0 0;font-size:clamp(1.8rem,4.2vw,3.8rem);line-height:1.2;font-weight:900;letter-spacing:.02em;background:linear-gradient(100deg,#fff 0%,#dce8ff 22%,#fff 42%,#fff 58%,#e4c76a 78%,#fff 100%);background-size:220% auto;background-clip:text;-webkit-background-clip:text;color:transparent;animation:titleShine 5s linear infinite;filter:drop-shadow(0 0 12px #1746a255)} 
 h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border-radius:10px;background:linear-gradient(90deg,transparent,#1746a2,#e4c76a,#1746a2,transparent);transform-origin:center;animation:underlinePulse 2.8s ease-in-out infinite}
-.welcome{margin:.5vh 0 1.2vh;color:#f4f8f4;font-size:clamp(.8rem,1.6vw,1.25rem)}
+.brand-copy{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0}.welcome{margin:.5vh 0 1.2vh;color:#f4f8f4;font-size:clamp(.8rem,1.6vw,1.25rem)}
 .heading{font-size:clamp(1rem,2vw,1.7rem);font-weight:800;margin:0 0 1.2vh;color:#ffffff}
 .heading:after{content:"";display:block;width:100px;height:2px;background:linear-gradient(90deg,transparent,#1746a2,#e4c76a,#1746a2,transparent);margin:.8vh auto 0}
 .prices{width:100%;max-width:1450px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1vw;margin:0 auto}
@@ -43,8 +43,8 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
 @keyframes cardIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes cardShine{0%,18%{left:-75%}55%,100%{left:135%}}
 @media(prefers-reduced-motion:reduce){h1,.item,.item:before,h1:after{animation:none!important;transition:none!important}}
-@media(max-height:520px){main{padding:1vh 4vw}.logo{width:42px;height:42px}.welcome{margin:.3vh 0 .6vh}.heading{margin-bottom:.7vh}.heading:after{margin:.4vh auto 0}.item{padding:1vh .5vw}.product-icon{height:35px;margin-bottom:.4vh}.hours{padding-top:.8vh}.footer{margin-top:.3vh}}
-@media(max-width:600px){html,body{overflow:auto}main{height:auto;min-height:100svh;padding:18px 14px;gap:8px}.baghdad-clock{position:relative;top:auto;left:auto;align-self:center;min-width:135px;margin-bottom:2px;padding:7px 14px}.prices{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.item{padding:16px 8px}.logo{width:68px;height:68px}.name{font-size:1rem}.price{font-size:1.25rem}.hours{margin-top:12px}}
+@media(max-height:520px){main{padding:1vh 4vw}.logo{width:68px;height:68px}.welcome{margin:.3vh 0 .6vh}.heading{margin-bottom:.7vh}.heading:after{margin:.4vh auto 0}.item{padding:1vh .5vw}.product-icon{height:35px;margin-bottom:.4vh}.hours{padding-top:.8vh}.footer{margin-top:.3vh}}
+@media(max-width:600px){html,body{overflow:auto}main{height:auto;min-height:100svh;padding:18px 14px;gap:8px}.brand{max-width:100%;gap:8px}.logo{width:68px;height:68px}h1{font-size:clamp(1.35rem,6vw,2rem)}.baghdad-clock{position:relative;top:auto;left:auto;align-self:center;min-width:135px;margin-bottom:2px;padding:7px 14px}.prices{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.item{padding:16px 8px}.logo{width:68px;height:68px}.name{font-size:1rem}.price{font-size:1.25rem}.hours{margin-top:12px}}
 
 
 .azkar-panel{width:100%;max-width:1000px;margin:1.5vh auto 0;padding:clamp(14px,2vw,22px);border:1px solid #c8a94e;border-radius:18px;background:linear-gradient(145deg,#102b56,#050914 78%);box-shadow:0 8px 26px #0009,0 0 20px #1746a218;text-align:center}
@@ -54,7 +54,7 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
 @media(max-width:600px){.azkar-panel{margin-top:14px;padding:14px}.azkar-text{font-size:1.05rem}}
 @media(min-width:601px){
   main{padding:1vh 4vw 7vh}
-  .logo{width:clamp(38px,5vh,54px);height:clamp(38px,5vh,54px)}
+  .logo{width:clamp(82px,12vh,140px);height:clamp(82px,12vh,140px)}
   .welcome{margin:.2vh 0 .5vh}
   .heading{margin-bottom:.5vh}
   .heading:after{margin:.3vh auto 0}
@@ -82,8 +82,10 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
   </div>
   <header class="brand">
     <img class="logo" src="https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg" alt="شعار ريال مدريد">
-    <h1>ماركت أم القرى</h1>
-    <p class="welcome">أهلاً وسهلاً بكم</p>
+    <div class="brand-copy">
+      <h1>ماركت أم القرى</h1>
+      <p class="welcome">أهلاً وسهلاً بكم</p>
+    </div>
   </header>
   <h2 class="heading">أسعار المواد الأساسية</h2>
   <section class="prices" aria-label="أسعار المواد الأساسية">
