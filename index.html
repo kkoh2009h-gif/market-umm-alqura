@@ -42,6 +42,13 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
 @media(max-height:520px){main{padding:1vh 4vw}.logo{width:42px;height:42px}.welcome{margin:.3vh 0 .6vh}.heading{margin-bottom:.7vh}.heading:after{margin:.4vh auto 0}.item{padding:1vh .5vw}.product-icon{height:35px;margin-bottom:.4vh}.hours{padding-top:.8vh}.footer{margin-top:.3vh}}
 @media(max-width:600px){html,body{overflow:auto}main{height:auto;min-height:100svh;padding:18px 14px;gap:8px}.prices{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.item{padding:16px 8px}.logo{width:68px;height:68px}.name{font-size:1rem}.price{font-size:1.25rem}.hours{margin-top:12px}}
 
+
+.azkar-panel{width:100%;max-width:1000px;margin:1.5vh auto 0;padding:clamp(14px,2vw,22px);border:1px solid #2865b8;border-radius:18px;background:linear-gradient(145deg,#111b2c,#080b12 78%);box-shadow:0 8px 26px #0009,0 0 20px #1769ff18;text-align:center}
+.azkar-label{color:#91baff;font-size:.8rem;font-weight:800;margin:0 0 8px}
+.azkar-text{font-size:clamp(1.05rem,2.3vw,1.65rem);font-weight:800;line-height:1.9;color:#fff;margin:0 auto;max-width:850px;min-height:3.8em;display:flex;align-items:center;justify-content:center}
+.azkar-note{color:#aab6c9;font-size:.78rem;margin:8px 0 0}
+@media(max-width:600px){.azkar-panel{margin-top:14px;padding:14px}.azkar-text{font-size:1.05rem}}
+
 </style>
 </head>
 <body>
@@ -65,12 +72,34 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
     <article class="item"><div class="product-icon" aria-hidden="true">🍚</div><div class="name">تمن حصة</div><div class="detail">الكيلو</div><div class="price">1,000 <span class="currency">د.ع</span></div></article>
     <article class="item"><div class="product-icon" aria-hidden="true">🍚</div><div class="name">تمن بسمتي</div><div class="detail">الكيلو</div><div class="price">2,250 <span class="currency">د.ع</span></div></article>
   </section>
+  <section class="azkar-panel" aria-label="أذكار العفو">
+    <p class="azkar-label">🤍 تذكير كل 15 دقيقة — أذكار العفو</p>
+    <p class="azkar-text" id="azkar-text">أستغفر الله العظيم وأتوب إليه</p>
+    <p class="azkar-note">اللهم إنك عفو تحب العفو فاعفُ عني</p>
+  </section>
   <div class="hours">أوقات الدوام: <strong>من 8 صباحاً إلى 1 ليلاً</strong></div>
   <div class="footer">نورتونا بزيارتكم • ماركت أم القرى</div>
 </main>
 <script>
 document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='f'){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();}});
 document.addEventListener('click',()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.().catch(()=>{});},{once:true});
+
+const azkarList=[
+'أستغفر الله العظيم وأتوب إليه',
+'اللهم إنك عفو تحب العفو فاعفُ عني',
+'رب اغفر لي وتب عليّ إنك أنت التواب الرحيم',
+'أستغفر الله، أستغفر الله، أستغفر الله',
+'اللهم اغفر لي وارحمني واهدني وعافني وارزقني',
+'سبحانك اللهم وبحمدك، أستغفرك وأتوب إليك',
+'اللهم اغفر لي ذنبي كله، دقّه وجلّه، أوله وآخره، وعلانيته وسرّه'
+];
+let azkarIndex=0;
+setInterval(()=>{
+  azkarIndex=(azkarIndex+1)%azkarList.length;
+  const azkarEl=document.getElementById('azkar-text');
+  if(azkarEl) azkarEl.textContent=azkarList[azkarIndex];
+},15*60*1000);
+
 
 
 </script>
