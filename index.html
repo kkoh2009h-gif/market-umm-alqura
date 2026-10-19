@@ -21,6 +21,9 @@ main:before{content:"";position:absolute;inset:2.5% 3%;border:2px solid #c8a94e;
 h1{position:relative;margin:.2vh 0 0;font-size:clamp(1.8rem,4.2vw,3.8rem);line-height:1.2;font-weight:900;letter-spacing:.02em;background:linear-gradient(100deg,#fff 0%,#dce8ff 22%,#fff 42%,#fff 58%,#e4c76a 78%,#fff 100%);background-size:220% auto;background-clip:text;-webkit-background-clip:text;color:transparent;animation:titleShine 5s linear infinite;filter:drop-shadow(0 0 12px #1746a255)} 
 h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border-radius:10px;background:linear-gradient(90deg,transparent,#1746a2,#e4c76a,#1746a2,transparent);transform-origin:center;animation:underlinePulse 2.8s ease-in-out infinite}
 .brand-copy{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0}.welcome{margin:.5vh 0 1.2vh;color:#f4f8f4;font-size:clamp(.8rem,1.6vw,1.25rem)}
+.welcome-audio-btn{margin-top:5px;border:1px solid #c8a94e;border-radius:999px;padding:5px 12px;background:linear-gradient(135deg,#1746a2,#07142b);color:#fff;font:700 .78rem Tahoma,Arial,sans-serif;cursor:pointer;box-shadow:0 3px 10px #0005}
+.welcome-audio-btn:active{transform:scale(.97)}
+
 .heading{font-size:clamp(1rem,2vw,1.7rem);font-weight:800;margin:0 0 1.2vh;color:#ffffff}
 .heading:after{content:"";display:block;width:100px;height:2px;background:linear-gradient(90deg,transparent,#1746a2,#e4c76a,#1746a2,transparent);margin:.8vh auto 0}
 
@@ -118,6 +121,7 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
     <div class="brand-copy">
       <h1>ماركت أم القرى</h1>
       <p class="welcome">أهلاً وسهلاً بكم</p>
+      <button type="button" id="welcome-audio-btn" class="welcome-audio-btn">🔊 تشغيل الترحيب</button>
     </div>
   </header>
   <h2 class="heading">أسعار المواد الأساسية</h2>
@@ -172,6 +176,21 @@ function updateBaghdadClock(){
 }
 updateBaghdadClock();
 setInterval(updateBaghdadClock,1000);
+
+// تشغيل عبارة الترحيب عند الضغط، حتى تعمل على المتصفحات التي تمنع الصوت التلقائي.
+const welcomeAudioBtn=document.getElementById('welcome-audio-btn');
+if(welcomeAudioBtn)welcomeAudioBtn.addEventListener('click',()=>{
+  if(!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)){
+    alert('المتصفح لا يدعم الصوت؛ جرّب فتح الموقع بمتصفح Chrome.');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const greeting=new SpeechSynthesisUtterance('مرحبا بكم في ماركت أم القرى');
+  greeting.lang='ar-SA';
+  greeting.rate=0.88;
+  greeting.pitch=1;
+  window.speechSynthesis.speak(greeting);
+});
 
 document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='f'){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();}});
 document.addEventListener('click',()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.().catch(()=>{});},{once:true});
