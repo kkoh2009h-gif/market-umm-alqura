@@ -62,6 +62,22 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
 .azkar-text{font-size:clamp(1.05rem,2.3vw,1.65rem);font-weight:800;line-height:1.9;color:#fff;margin:0 auto;max-width:850px;min-height:3.8em;display:flex;align-items:center;justify-content:center}
 .azkar-note{color:#c9d6ed;font-size:.78rem;margin:8px 0 0}
 @media(max-width:600px){.azkar-panel{margin-top:14px;padding:14px}.azkar-text{font-size:1.05rem}}
+.azkar-actions{display:flex;justify-content:center;margin-top:8px}
+.azkar-open-btn{border:1px solid #e4c76a;border-radius:999px;padding:7px 17px;background:linear-gradient(135deg,#1746a2,#07142b);color:#fff;font-family:inherit;font-size:.82rem;font-weight:800;cursor:pointer;box-shadow:0 3px 12px #0005;transition:transform .2s,box-shadow .2s}
+.azkar-open-btn:hover{transform:translateY(-2px);box-shadow:0 5px 16px #1746a255}
+.azkar-modal{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:16px;background:#000d;backdrop-filter:blur(7px)}
+.azkar-modal.is-open{display:flex}
+.azkar-dialog{position:relative;width:min(680px,100%);max-height:88vh;overflow:auto;border:1px solid #c8a94e;border-radius:22px;padding:24px 18px;background:radial-gradient(ellipse at top,#183a70,#08152b 58%,#02050c);box-shadow:0 20px 70px #000b;text-align:center}
+.azkar-dialog h2{margin:0 0 5px;color:#e4c76a;font-size:1.45rem}
+.azkar-subtitle{margin:0 0 16px;color:#dce8ff;font-size:.85rem}
+.azkar-list{display:grid;grid-template-columns:1fr;gap:10px;text-align:right}
+.azkar-card{position:relative;border:1px solid #31558b;border-radius:14px;padding:13px 15px;background:linear-gradient(120deg,#102b56dd,#050914ee);box-shadow:inset 0 1px 0 #ffffff0a;animation:cardIn .4s ease both}
+.azkar-card .azkar-number{display:inline-grid;place-items:center;width:25px;height:25px;margin-left:7px;border-radius:50%;background:#c8a94e;color:#07142b;font-size:.78rem;font-weight:900}
+.azkar-card p{display:inline;margin:0;color:#fff;font-size:1rem;font-weight:700;line-height:1.9}
+.azkar-close{margin-top:17px;border:1px solid #c8a94e;border-radius:999px;padding:9px 26px;background:#07142b;color:#fff;font:inherit;font-weight:800;cursor:pointer}
+@media(min-width:601px){.azkar-actions{margin-top:5px}.azkar-open-btn{padding:5px 14px;font-size:.72rem}.azkar-dialog{width:min(620px,94vw)}.azkar-card p{font-size:.95rem}}
+@media(max-width:600px){.azkar-dialog{padding:22px 13px}.azkar-card{padding:11px}.azkar-card p{font-size:.92rem}}
+
 @media(min-width:601px){
   main{padding:1vh 4vw 7vh}
   .logo{width:clamp(82px,12vh,140px);height:clamp(82px,12vh,140px);position:absolute;right:4%;top:4vh}\n  .brand{max-width:72%;margin-top:1vh}
@@ -135,6 +151,23 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
     <p class="azkar-label">🤍 تذكير كل 5 دقائق — أذكار العفو</p>
     <p class="azkar-text" id="azkar-text">أستغفر الله العظيم وأتوب إليه</p>
     <p class="azkar-note">اللهم إنك عفو تحب العفو فاعفُ عني</p>
+    <div class="azkar-actions"><button type="button" class="azkar-open-btn" id="open-azkar">📿 عرض الأذكار كاملة</button></div>
+  </section>
+  <section class="azkar-modal" id="azkar-modal" role="dialog" aria-modal="true" aria-labelledby="azkar-modal-title">
+    <div class="azkar-dialog">
+      <h2 id="azkar-modal-title">🤍 أذكار وأدعية</h2>
+      <p class="azkar-subtitle">مجموعة من الأذكار لتطمئن بها القلوب</p>
+      <div class="azkar-list">
+        <article class="azkar-card"><span class="azkar-number">١</span><p>أستغفر الله العظيم وأتوب إليه.</p></article>
+        <article class="azkar-card"><span class="azkar-number">٢</span><p>اللهم إنك عفو تحب العفو فاعفُ عني.</p></article>
+        <article class="azkar-card"><span class="azkar-number">٣</span><p>سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر.</p></article>
+        <article class="azkar-card"><span class="azkar-number">٤</span><p>اللهم صلِّ وسلم على نبينا محمد.</p></article>
+        <article class="azkar-card"><span class="azkar-number">٥</span><p>رب اغفر لي وتب عليّ، إنك أنت التواب الرحيم.</p></article>
+        <article class="azkar-card"><span class="azkar-number">٦</span><p>لا حول ولا قوة إلا بالله العلي العظيم.</p></article>
+        <article class="azkar-card"><span class="azkar-number">٧</span><p>اللهم اغفر لي وارحمني واهدني وعافني وارزقني.</p></article>
+      </div>
+      <button type="button" class="azkar-close" id="close-azkar">إغلاق ✕</button>
+    </div>
   </section>
   <div class="hours">أوقات الدوام: <strong>من 8 صباحاً إلى 1 ليلاً</strong></div>
   <div class="footer">نورتونا بزيارتكم • ماركت أم القرى</div>
@@ -179,6 +212,16 @@ const azkarList=[
 'سبحانك اللهم وبحمدك، أستغفرك وأتوب إليك',
 'اللهم اغفر لي ذنبي كله، دقّه وجلّه، أوله وآخره، وعلانيته وسرّه'
 ];
+const azkarModal=document.getElementById('azkar-modal');
+const openAzkar=document.getElementById('open-azkar');
+const closeAzkar=document.getElementById('close-azkar');
+function showAzkar(){if(azkarModal)azkarModal.classList.add('is-open');}
+function hideAzkar(){if(azkarModal)azkarModal.classList.remove('is-open');}
+if(openAzkar)openAzkar.addEventListener('click',showAzkar);
+if(closeAzkar)closeAzkar.addEventListener('click',hideAzkar);
+if(azkarModal)azkarModal.addEventListener('click',e=>{if(e.target===azkarModal)hideAzkar();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')hideAzkar();});
+
 let azkarIndex=0;
 setInterval(()=>{
   azkarIndex=(azkarIndex+1)%azkarList.length;
