@@ -13,9 +13,9 @@ body{display:grid;place-items:center;background:radial-gradient(ellipse at 50% 3
 main{position:relative;width:100%;height:100%;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3vh 5vw;isolation:isolate}
 main:before{content:"";position:absolute;inset:5% 8%;border:1px solid #242424;border-radius:28px;pointer-events:none;z-index:-1;box-shadow:0 0 55px #ffffff08,inset 0 0 50px #ffffff04}
 main:after{content:"";position:absolute;left:12%;right:12%;bottom:12%;height:1px;background:linear-gradient(90deg,transparent,#555,transparent);z-index:-1}
-.logo-wrap{width:clamp(95px,17vh,175px);height:clamp(95px,17vh,175px);display:grid;place-items:center;margin-bottom:1.8vh;animation:float 4s ease-in-out infinite}
+.logo-wrap{width:clamp(68px,11vh,125px);height:clamp(68px,11vh,125px);flex:0 0 auto;display:grid;place-items:center;margin-bottom:2.5vh;animation:float 4s ease-in-out infinite}
 .logo{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 14px #ffffff20)}
-h1{margin:0;font-size:clamp(2rem,6.2vw,5.4rem);font-weight:900;letter-spacing:.01em;line-height:1.35;text-shadow:0 2px 22px #ffffff14}
+h1{position:relative;z-index:1;margin:0;font-size:clamp(1.8rem,5.2vw,4.6rem);font-weight:900;letter-spacing:.01em;line-height:1.25;text-shadow:0 2px 22px #ffffff14}
 .rule{width:min(360px,45vw);height:2px;background:linear-gradient(90deg,transparent,#f0f0f0,transparent);margin:2.1vh 0;animation:glow 3.5s ease-in-out infinite}
 .welcome{font-size:clamp(1rem,2.5vw,2rem);color:#c9c9c9;margin:0 0 3vh}
 .hours{border:1px solid #454545;border-radius:18px;padding:1.8vh 4vw;background:linear-gradient(135deg,#161616,#050505);min-width:min(430px,78vw);box-shadow:0 10px 35px #000}
@@ -26,7 +26,7 @@ h1{margin:0;font-size:clamp(2rem,6.2vw,5.4rem);font-weight:900;letter-spacing:.0
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 @keyframes glow{0%,100%{opacity:.5;transform:scaleX(.92)}50%{opacity:1;transform:scaleX(1)}}
 @keyframes pulse{0%,100%{opacity:.45}50%{opacity:1}}
-@media (max-height:500px){.logo-wrap{width:75px;height:75px;margin-bottom:1vh}.rule{margin:1vh 0}.welcome{margin-bottom:1.5vh}.hours{padding:1vh 3vw}.footer{bottom:3%}main:before{inset:2% 5%}}
+@media (max-height:500px){.logo-wrap{width:62px;height:62px;margin-bottom:1vh}.rule{margin:1vh 0}.welcome{margin-bottom:1.5vh}.hours{padding:1vh 3vw}.footer{bottom:3%}main:before{inset:2% 5%}}
 </style>
 </head>
 <body>
