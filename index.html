@@ -23,7 +23,10 @@ main:before{content:"";position:absolute;inset:2.5% 3%;border:2px solid #DA291C;
 
 .brand{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:clamp(10px,2vw,28px);flex:0 0 auto;max-width:78%;margin-inline:auto;margin-top:1.5vh}
 .logo-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;flex:0 0 auto}.logo{width:clamp(82px,13vh,150px);height:clamp(82px,13vh,150px);object-fit:contain;flex:0 0 auto;filter:drop-shadow(0 0 18px #DA291C88);animation:float 4s ease-in-out infinite}.match-result{width:clamp(150px,17vw,220px);padding:10px 13px;border:2px solid #DA291C;border-radius:17px;background:linear-gradient(145deg,#004170,#001A35 68%,#DA291C);box-shadow:0 0 24px #DA291C66, inset 0 0 18px #ffffff0d;text-align:center;animation:scoreGlow 3s ease-in-out infinite}
-.match-teams{display:flex;justify-content:space-between;gap:10px;font-size:clamp(.7rem,1vw,.9rem);font-weight:900;color:#fff}
+.match-teams{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:clamp(.7rem,1vw,.9rem);font-weight:900;color:#fff}
+.match-club{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;flex:1}
+.match-club img{width:clamp(30px,4vh,44px);height:clamp(30px,4vh,44px);object-fit:contain;filter:drop-shadow(0 2px 5px #0008)}
+
 .match-score{display:flex;align-items:center;justify-content:center;gap:18px;margin:2px 0;font-size:clamp(2.4rem,5vh,3.6rem);font-weight:1000;line-height:1.15;color:#fff;text-shadow:0 0 15px #DA291C88}
 .match-score b{font-size:.55em;color:#DA291C}
 .match-status{font-size:clamp(.62rem,.8vw,.78rem);font-weight:800;color:#dceeff}
@@ -140,7 +143,10 @@ h1:after{content:"";display:block;width:62%;height:2px;margin:.6vh auto 0;border
   <header class="brand">
     <div class="logo-wrap">
       <div class="match-result" aria-label="نتيجة باريس سان جيرمان أربعة برشلونة اثنان">
-        <div class="match-teams"><span>باريس</span><span>برشلونة</span></div>
+        <div class="match-teams">
+          <span class="match-club"><img src="https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_F.C..svg" alt="شعار باريس">باريس</span>
+          <span class="match-club"><img src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg" alt="شعار برشلونة">برشلونة</span>
+        </div>
         <div class="match-score"><span>4</span><b>–</b><span>2</span></div>
         <div class="match-status">🏆 انتهت المباراة</div>
       </div>
