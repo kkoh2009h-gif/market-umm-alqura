@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#142b45"><title>إدارة ماركت أم القرى</title>
+<style>
+:root{color-scheme:dark;--bg:#091522;--panel:#12263b;--panel2:#193652;--line:#557da8;--text:#f4f8ff;--muted:#b9cbe0;--accent:#8db9e0;--good:#6dd6a3;--warn:#f3c86b;--bad:#ff8b8b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#25466c,#0b1522 55%,#060c13);color:var(--text);font-family:Tahoma,Arial,sans-serif;min-height:100vh}
+header{padding:22px clamp(14px,4vw,42px);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;border-bottom:1px solid #416b9c55;background:#081321bb}
+.brand{display:flex;align-items:center;gap:12px}.crest{width:52px;height:52px;object-fit:contain}.brand h1{font-size:clamp(1.15rem,3vw,1.8rem);margin:0}.brand p{margin:5px 0 0;color:var(--muted);font-size:.85rem}
+a,button{font:inherit}a{color:var(--accent)}button{border:1px solid var(--line);background:linear-gradient(135deg,#284d76,#10233a);color:#fff;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}button:hover{filter:brightness(1.13)}button.danger{border-color:#995c67;background:#512c3a}button.secondary{background:#14283d}
+main{max-width:1400px;margin:auto;padding:22px clamp(12px,3vw,32px) 50px}.notice{padding:12px 15px;border:1px solid #557da8;border-radius:12px;background:#12263b;color:#dce7f5;line-height:1.8;margin-bottom:18px}.notice strong{color:#fff}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}nav button.active{background:#d9e9f8;color:#10233a;border-color:#d9e9f8}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}.stat,.panel{background:linear-gradient(145deg,#193652dd,#0d1a29);border:1px solid #416b9c88;border-radius:16px;padding:16px;box-shadow:0 8px 22px #0003}.stat span{color:var(--muted);font-size:.85rem}.stat strong{display:block;font-size:clamp(1.25rem,3vw,1.8rem);margin-top:9px}.stat small{color:var(--muted)}
+section[hidden]{display:none}.panel{margin-bottom:16px}.panel h2{font-size:1.15rem;margin:0 0 14px}.form-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.field{display:flex;flex-direction:column;gap:6px}.field label{color:var(--muted);font-size:.84rem}.field input,.field select{width:100%;min-width:0;padding:11px;border:1px solid #416b9c;border-radius:9px;background:#081522;color:#fff;font:inherit}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:580px}th,td{text-align:right;padding:11px 9px;border-bottom:1px solid #416b9c55;white-space:nowrap}th{color:#c4d8ee;font-size:.84rem}td{font-size:.9rem}.low{color:var(--warn)}.good{color:var(--good)}.empty{text-align:center;color:var(--muted);padding:22px}
+small.muted{color:var(--muted)}.tag{padding:4px 8px;border-radius:999px;background:#25466c;color:#e3efff;font-size:.78rem}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}header{align-items:flex-start}.brand{align-items:flex-start}.crest{width:42px;height:42px}}
+@media(max-width:420px){.form-grid{grid-template-columns:1fr}.stat{padding:12px}}
+</style></head>
+<body>
+<header><div class="brand"><img class="crest" src="https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg" alt="شعار ريال مدريد"><div><h1>إدارة ماركت أم القرى</h1><p>لوحة التحكم · المرحلة الأولى</p></div></div><a href="./index.html">الرجوع لشاشة العرض ↗</a></header>
+<main>
+<div class="notice"><strong>تنبيه المرحلة الأولى:</strong> هذه نسخة تجريبية تحفظ بياناتها على هذا المتصفح فقط. البيانات لا تتزامن بين الموبايل والتلفزيون بعد، ولا تستخدمها كسجل محاسبي وحيد. المرحلة التالية تضيف قاعدة بيانات سحابية وتسجيل دخول ومزامنة بين الأجهزة.</div>
+<nav><button class="active" data-tab="overview">نظرة عامة</button><button data-tab="products">المنتجات والمخزون</button><button data-tab="sales">تسجيل المبيعات</button><button data-tab="expenses">المصاريف</button></nav>
+<div class="stats">
+<div class="stat"><span>عدد المنتجات</span><strong id="statProducts">14</strong><small>منتج مسجّل</small></div>
+<div class="stat"><span>قيمة المخزون</span><strong id="statStock">0 د.ع</strong><small>حسب كلفة الشراء</small></div>
+<div class="stat"><span>إجمالي المبيعات</span><strong id="statSales">0 د.ع</strong><small>المبيعات المسجلة</small></div>
+<div class="stat"><span>صافي الربح التقديري</span><strong id="statProfit">0 د.ع</strong><small>بعد كلفة البضاعة والمصاريف</small></div>
+</div>
+<section id="overview">
+<div class="panel"><h2>ملخص الحسابات</h2><p>صافي الربح التقديري = إجمالي ربح المبيعات − المصاريف المسجلة.</p><p class="muted">أدخل كلفة شراء كل منتج وكميته حتى تكون حسابات الربح وقيمة المخزون مفيدة.</p><div class="actions"><button onclick="switchTab('products')">إدارة المنتجات</button><button onclick="switchTab('sales')">تسجيل عملية بيع</button><button onclick="switchTab('expenses')">إضافة مصروف</button></div></div>
+<div class="panel"><h2>آخر عمليات البيع</h2><div class="table-wrap"><table><thead><tr><th>التاريخ</th><th>المنتج</th><th>الكمية</th><th>المبلغ</th><th>الربح التقديري</th></tr></thead><tbody id="recentSales"></tbody></table></div></div>
+</section>
+<section id="products" hidden>
+<div class="panel"><h2 id="productFormTitle">إضافة منتج أو تحديث المخزون</h2><form id="productForm"><input id="productId" type="hidden"><div class="form-grid">
+<div class="field"><label for="pName">اسم المنتج</label><input id="pName" required placeholder="مثلاً: ماء صغير"></div>
+<div class="field"><label for="pPrice">سعر البيع (د.ع)</label><input id="pPrice" type="number" min="0" step="1" required placeholder="1000"></div>
+<div class="field"><label for="pCost">كلفة شراء الوحدة (د.ع)</label><input id="pCost" type="number" min="0" step="1" value="0" required></div>
+<div class="field"><label for="pStock">الكمية المتوفرة</label><input id="pStock" type="number" min="0" step="1" value="0" required></div>
+</div><div class="actions"><button type="submit">حفظ المنتج</button><button type="button" class="secondary" id="cancelEdit">إلغاء التعديل</button></div></form></div>
+<div class="panel"><h2>قائمة المنتجات</h2><div class="table-wrap"><table><thead><tr><th>المنتج</th><th>سعر البيع</th><th>الكلفة</th><th>المخزون</th><th>الإجراء</th></tr></thead><tbody id="productRows"></tbody></table></div></div>
+</section>
+<section id="sales" hidden>
+<div class="panel"><h2>تسجيل عملية بيع</h2><form id="saleForm"><div class="form-grid"><div class="field"><label for="saleProduct">المنتج</label><select id="saleProduct" required></select></div><div class="field"><label for="saleQty">الكمية المباعة</label><input id="saleQty" type="number" min="1" step="1" value="1" required></div><div class="field"><label for="salePrice">سعر الوحدة (د.ع)</label><input id="salePrice" type="number" min="0" step="1" required></div><div class="field"><label for="saleNote">ملاحظة (اختياري)</label><input id="saleNote" placeholder="مثلاً: بيع نقدي"></div></div><div class="actions"><button type="submit">تأكيد البيع وخصم المخزون</button></div></form></div>
+<div class="panel"><h2>سجل المبيعات</h2><div class="table-wrap"><table><thead><tr><th>التاريخ</th><th>المنتج</th><th>الكمية</th><th>المبلغ</th><th>الربح التقديري</th><th>ملاحظة</th></tr></thead><tbody id="salesRows"></tbody></table></div></div>
+</section>
+<section id="expenses" hidden>
+<div class="panel"><h2>إضافة مصروف</h2><form id="expenseForm"><div class="form-grid"><div class="field"><label for="eName">نوع المصروف</label><input id="eName" required placeholder="مثلاً: كهرباء"></div><div class="field"><label for="eAmount">المبلغ (د.ع)</label><input id="eAmount" type="number" min="1" required></div><div class="field"><label for="eDate">التاريخ</label><input id="eDate" type="date" required></div><div class="field"><label for="eNote">ملاحظة</label><input id="eNote" placeholder="اختياري"></div></div><div class="actions"><button type="submit">حفظ المصروف</button></div></form></div>
+<div class="panel"><h2>سجل المصاريف</h2><div class="table-wrap"><table><thead><tr><th>التاريخ</th><th>النوع</th><th>المبلغ</th><th>ملاحظة</th><th>الإجراء</th></tr></thead><tbody id="expenseRows"></tbody></table></div></div>
+</section>
+<div class="actions"><button class="secondary" id="exportBtn">تصدير نسخة احتياطية JSON</button><button class="danger" id="resetBtn">مسح بيانات التجربة</button></div>
+</main>
+<script>
+const initialProducts=[
+["بيض المائدة",6000,0,0],["زيت الطبخ 900 مل",3000,0,0],["سكر الكيلو",1500,0,0],["معجون جينو صغير",1250,0,0],["معجون جينو كبير",2500,0,0],["إندومي",500,0,0],["حليب التونسا",3000,0,0],["حفاظات الماس",3750,0,0],["حفاظات هلا بيبي",4000,0,0],["تمن حصة الكيلو",1000,0,0],["تمن بسمتي الكيلو",2250,0,0],["راشي الرحمة",4000,0,0],["تايت الوزير غسالة عادي",5500,0,0],["تايت الوزير غسالة أوتوماتيك",6000,0,0]
+].map((p,i)=>({id:i+1,name:p[0],price:p[1],cost:p[2],stock:p[3]}));
+const KEY='ummalqura_manager_v1';
+let state;
+try{state=JSON.parse(localStorage.getItem(KEY))||null}catch(e){state=null}
+if(!state||!Array.isArray(state.products))state={products:initialProducts,sales:[],expenses:[],nextId:15};
+function save(){localStorage.setItem(KEY,JSON.stringify(state));render()}
+function money(n){return Math.round(n||0).toLocaleString('en-US')+' د.ع'}
+function safe(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function dateNow(){return new Date().toLocaleDateString('en-CA')}
+function switchTab(id){document.querySelectorAll('main>section').forEach(s=>s.hidden=s.id!==id);document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));if(id==='sales')syncSaleProduct()}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+function syncSaleProduct(){const sel=document.getElementById('saleProduct'),prev=sel.value;sel.innerHTML=state.products.map(p=>'<option value="'+p.id+'">'+safe(p.name)+' — مخزون '+p.stock+'</option>').join('');if(state.products.some(p=>String(p.id)===prev))sel.value=prev;updateSalePrice()}
+function updateSalePrice(){const p=state.products.find(p=>p.id===Number(document.getElementById('saleProduct').value));if(p)document.getElementById('salePrice').value=p.price}
+document.getElementById('saleProduct').addEventListener('change',updateSalePrice);
+function render(){
+document.getElementById('statProducts').textContent=state.products.length;
+document.getElementById('statStock').textContent=money(state.products.reduce((s,p)=>s+p.stock*p.cost,0));
+const totalSales=state.sales.reduce((s,x)=>s+x.qty*x.price,0),gross=state.sales.reduce((s,x)=>s+x.qty*(x.price-x.cost),0),expenses=state.expenses.reduce((s,x)=>s+x.amount,0);
+document.getElementById('statSales').textContent=money(totalSales);document.getElementById('statProfit').textContent=money(gross-expenses);
+document.getElementById('productRows').innerHTML=state.products.map(p=>'<tr><td>'+safe(p.name)+'</td><td>'+money(p.price)+'</td><td>'+money(p.cost)+'</td><td class="'+(p.stock<=3?'low':'')+'">'+p.stock+'</td><td><button class="secondary" onclick="editProduct('+p.id+')">تعديل</button> <button class="danger" onclick="deleteProduct('+p.id+')">حذف</button></td></tr>').join('')||'<tr><td colspan="5" class="empty">ماكو منتجات بعد</td></tr>';
+document.getElementById('salesRows').innerHTML=state.sales.slice().reverse().map(x=>'<tr><td>'+safe(x.date)+'</td><td>'+safe(x.name)+'</td><td>'+x.qty+'</td><td>'+money(x.qty*x.price)+'</td><td>'+money(x.qty*(x.price-x.cost))+'</td><td>'+safe(x.note||'—')+'</td></tr>').join('')||'<tr><td colspan="6" class="empty">ماكو مبيعات مسجلة</td></tr>';
+document.getElementById('recentSales').innerHTML=state.sales.slice(-5).reverse().map(x=>'<tr><td>'+safe(x.date)+'</td><td>'+safe(x.name)+'</td><td>'+x.qty+'</td><td>'+money(x.qty*x.price)+'</td><td>'+money(x.qty*(x.price-x.cost))+'</td></tr>').join('')||'<tr><td colspan="5" class="empty">سجّل أول عملية بيع حتى يظهر الملخص هنا</td></tr>';
+document.getElementById('expenseRows').innerHTML=state.expenses.slice().reverse().map(x=>'<tr><td>'+safe(x.date)+'</td><td>'+safe(x.name)+'</td><td>'+money(x.amount)+'</td><td>'+safe(x.note||'—')+'</td><td><button class="danger" onclick="deleteExpense('+x.id+')">حذف</button></td></tr>').join('')||'<tr><td colspan="5" class="empty">ماكو مصاريف مسجلة</td></tr>';
+syncSaleProduct();
+}
+document.getElementById('productForm').addEventListener('submit',e=>{e.preventDefault();const id=Number(document.getElementById('productId').value),p={name:document.getElementById('pName').value.trim(),price:Number(document.getElementById('pPrice').value),cost:Number(document.getElementById('pCost').value),stock:Number(document.getElementById('pStock').value)};if(!p.name)return;if(id){Object.assign(state.products.find(x=>x.id===id),p)}else{p.id=state.nextId++;state.products.push(p)}e.target.reset();document.getElementById('productId').value='';document.getElementById('pCost').value=0;document.getElementById('pStock').value=0;document.getElementById('productFormTitle').textContent='إضافة منتج أو تحديث المخزون';save()});
+window.editProduct=id=>{const p=state.products.find(x=>x.id===id);if(!p)return;document.getElementById('productId').value=p.id;document.getElementById('pName').value=p.name;document.getElementById('pPrice').value=p.price;document.getElementById('pCost').value=p.cost;document.getElementById('pStock').value=p.stock;document.getElementById('productFormTitle').textContent='تعديل: '+p.name;switchTab('products');window.scrollTo({top:0,behavior:'smooth'})};
+window.deleteProduct=id=>{const p=state.products.find(x=>x.id===id);if(p&&confirm('حذف المنتج '+p.name+'؟')){state.products=state.products.filter(x=>x.id!==id);save()}};
+document.getElementById('cancelEdit').addEventListener('click',()=>{document.getElementById('productForm').reset();document.getElementById('productId').value='';document.getElementById('productFormTitle').textContent='إضافة منتج أو تحديث المخزون';document.getElementById('pCost').value=0;document.getElementById('pStock').value=0});
+document.getElementById('saleForm').addEventListener('submit',e=>{e.preventDefault();const p=state.products.find(x=>x.id===Number(document.getElementById('saleProduct').value)),qty=Number(document.getElementById('saleQty').value),price=Number(document.getElementById('salePrice').value);if(!p)return alert('أضف منتجاً أولاً');if(qty<1||qty>p.stock)return alert('الكمية غير صحيحة أو المخزون غير كافٍ');state.sales.push({id:Date.now(),date:dateNow(),productId:p.id,name:p.name,qty,price,cost:p.cost,note:document.getElementById('saleNote').value.trim()});p.stock-=qty;e.target.reset();document.getElementById('saleQty').value=1;save();switchTab('sales')});
+document.getElementById('expenseForm').addEventListener('submit',e=>{e.preventDefault();state.expenses.push({id:Date.now(),name:document.getElementById('eName').value.trim(),amount:Number(document.getElementById('eAmount').value),date:document.getElementById('eDate').value,note:document.getElementById('eNote').value.trim()});e.target.reset();document.getElementById('eDate').value=dateNow();save()});
+window.deleteExpense=id=>{if(confirm('تحذف هذا المصروف؟')){state.expenses=state.expenses.filter(x=>x.id!==id);save()}};
+document.getElementById('exportBtn').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='umm-alqura-backup-'+dateNow()+'.json';a.click();URL.revokeObjectURL(url)});
+document.getElementById('resetBtn').addEventListener('click',()=>{if(confirm('متأكد تريد تمسح كل بيانات التجربة؟ نزّل نسخة احتياطية أولاً إذا تحتاجها.')){localStorage.removeItem(KEY);state={products:initialProducts.map(p=>({...p})),sales:[],expenses:[],nextId:15};save()}});
+document.getElementById('eDate').value=dateNow();render();
+</script></body></html>
