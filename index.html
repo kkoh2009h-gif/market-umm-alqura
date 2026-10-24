@@ -207,6 +207,7 @@ h1:after,.heading:after{background:linear-gradient(90deg,transparent,#416b9c,#dc
   <div class="hours">أوقات الدوام: <strong>من 8 صباحاً إلى 1 ليلاً</strong></div>
   <div class="footer">نورتونا بزيارتكم • ماركت أم القرى</div>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 function updateBaghdadClock(){
   const now=new Date();
@@ -297,14 +298,12 @@ function playDeviceGreeting(phrase){
 }
 
 
-/* المنتجات والتصنيفات تُقرأ من لوحة الإدارة على نفس الموقع */
-const STORE_KEY='ummalqura_manager_v1';
-let activeCategory='الكل';
-function loadStoreProducts(){try{const s=JSON.parse(localStorage.getItem(STORE_KEY)||'null');return s&&Array.isArray(s.products)?s.products:[]}catch(e){return []}}
+const db=window.supabase.createClient("https://fuvvkddpnoqoduyslrwe.supabase.co","sb_publishable_6DN8M_kyiY-ASYdjLxMbmw_lsGqhABd");let activeCategory='الكل',cloudProducts=[];
+async function loadStoreProducts(){const {data,error}=await db.from('products').select('id,name,category,selling_price,is_active').eq('is_active',true).order('display_order').order('name');if(error){console.error(error);return null}return (data||[]).map(p=>({...p,category:p.category||'أخرى',price:+p.selling_price||0}))}
 function renderPublicProducts(){
  const host=document.getElementById('public-products'),filters=document.getElementById('category-filters');
  if(!host||!filters)return;
- const products=loadStoreProducts();
+ const products=cloudProducts;
  const cats=['الكل',...new Set(products.map(p=>p.category||'أخرى'))];
  if(!cats.includes(activeCategory))activeCategory='الكل';
  filters.innerHTML=cats.map(c=>'<button type="button" class="'+(c===activeCategory?'active':'')+'" data-category="'+c.replace(/&/g,'&amp;').replace(/"/g,'&quot;')+'">'+c+'</button>').join('');
@@ -313,8 +312,7 @@ function renderPublicProducts(){
  host.innerHTML=shown.map(p=>'<article class="item" tabindex="0"><div class="product-icon" aria-hidden="true">🛒</div><div class="name">'+escapeProductText(p.name)+'</div><div class="detail">'+escapeProductText(p.category||'أخرى')+'</div><div class="price">'+Number(p.price||0).toLocaleString('en-US')+' <span class="currency">د.ع</span></div></article>').join('')||'<p class="empty-products">'+(products.length?'ماكو منتجات بهذا التصنيف حالياً.':'أضف المنتجات والتصنيفات من لوحة الإدارة حتى تظهر هنا.')+'</p>';
 }
 function escapeProductText(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-renderPublicProducts();
-window.addEventListener('storage',e=>{if(e.key===STORE_KEY)renderPublicProducts()});
+async function refreshProducts(){const p=await loadStoreProducts();if(p!==null){cloudProducts=p;renderPublicProducts()}}refreshProducts();setInterval(refreshProducts,3000);db.channel('products-live').on('postgres_changes',{event:'*',schema:'public',table:'products'},()=>refreshProducts()).subscribe();
 
 // النقر على بطاقة أي منتج ينطق اسمه وسعره.
 const productCards=document.querySelectorAll('.prices .item');
