@@ -149,6 +149,11 @@ h1:after,.heading:after{background:linear-gradient(90deg,transparent,#416b9c,#dc
 .azkar-card .azkar-number{background:#8db9e0;color:#0b1522}
 .azkar-close{border-color:#416b9c;background:#10233a}
 @media(min-width:601px){.azkar-panel{background:linear-gradient(90deg,#0b1522f5,#284d76f5,#0b1522f5)}}
+
+.category-filters{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:8px auto;max-width:100%}
+.category-filters button{font:inherit;font-size:clamp(12px,1.3vw,20px);padding:8px 14px;border:1px solid #d4b64c;border-radius:12px;background:#00345a;color:#fff;cursor:pointer}
+.category-filters button.active{background:#d4b64c;color:#07172a}
+.empty-products{grid-column:1/-1;text-align:center;color:#dce8f5;padding:24px;font-size:clamp(16px,2vw,28px)}
 </style>
 </head>
 <body>
@@ -175,22 +180,8 @@ h1:after,.heading:after{background:linear-gradient(90deg,transparent,#416b9c,#dc
     </div>
   </header>
   <h2 class="heading">أسعار المواد الأساسية</h2>
-  <section class="prices" aria-label="أسعار المواد الأساسية">
-    <article class="item"><div class="product-icon" aria-hidden="true">🥚</div><div class="name">بيض المائدة</div><div class="detail">الطبقة</div><div class="price">6,000 <span class="currency">د.ع</span></div></article>
-    <article class="item"><div class="product-icon" aria-hidden="true">🫗</div><div class="name">زيت الطبخ</div><div class="detail">900 مل</div><div class="price">3,000 <span class="currency">د.ع</span></div></article>
-    <article class="item"><div class="product-icon" aria-hidden="true">🍚</div><div class="name">سكر</div><div class="detail">الكيلو</div><div class="price">1,500 <span class="currency">د.ع</span></div></article>
-    <article class="item"><div class="product-icon" aria-hidden="true">🥫</div><div class="name">معجون جينو صغير</div><div class="detail">عبوة صغيرة</div><div class="price">1,250 <span class="currency">د.ع</span></div></article>
-    <article class="item"><div class="product-icon" aria-hidden="true">🥫</div><div class="name">معجون جينو كبير</div><div class="detail">عبوة كبيرة</div><div class="price">2,500 <span class="currency">د.ع</span></div></article>
-    <article class="item"><div class="product-icon" aria-hidden="true">🍜</div><div class="name">إندومي</div><div class="detail">الواحدة 500 د.ع</div><div class="price">3 بـ 1,000 <span class="currency">د.ع</span></div></article>
-    <article class="item"><div class="product-icon" aria-hidden="true">🥛</div><div class="name">حليب التونسا</div><div class="detail">علبة حليب</div><div class="price">3,000 <span class="currency">د.ع</span></div></article>
-    <article class="item"><div class="product-icon" aria-hidden="true">🧷</div><div class="name">حفاظات الماس</div><div class="detail">الحفاظات</div><div class="price">3,750 <span class="currency">د.ع</span></div></article>
-    <article class="item"><div class="product-icon" aria-hidden="true">👶</div><div class="name">حفاظات هلا بيبي</div><div class="detail">الحفاظات</div><div class="price">4,000 <span class="currency">د.ع</span></div></article>
-    <article class="item"><div class="product-icon" aria-hidden="true">🍚</div><div class="name">تمن حصة</div><div class="detail">الكيلو</div><div class="price">1,000 <span class="currency">د.ع</span></div></article>
-    <article class="item"><div class="product-icon" aria-hidden="true">🍚</div><div class="name">تمن بسمتي</div><div class="detail">الكيلو</div><div class="price">2,250 <span class="currency">د.ع</span></div></article>
-    <article class="item"><div class="product-icon" aria-hidden="true">🥣</div><div class="name">راشي الرحمة</div><div class="detail">علبة راشي</div><div class="price">4,000 <span class="currency">د.ع</span></div></article>
-    <article class="item"><div class="product-icon" aria-hidden="true">🧺</div><div class="name">تايت الوزير غسالة عادي</div><div class="detail">تايت الوزير</div><div class="price">5,500 <span class="currency">د.ع</span></div></article>
-    <article class="item"><div class="product-icon" aria-hidden="true">🫧</div><div class="name">تايت الوزير غسالة أوتوماتيك</div><div class="detail">تايت الوزير</div><div class="price">6,000 <span class="currency">د.ع</span></div></article>
-  </section>
+  <div id="category-filters" class="category-filters" aria-label="تصنيفات المنتجات"></div>
+  <section class="prices" id="public-products" aria-label="أسعار المنتجات"><p class="empty-products">أضف المنتجات من لوحة الإدارة حتى تظهر هنا.</p></section>
   <section class="azkar-panel" aria-label="أذكار العفو">
     <p class="azkar-label">🤍 تذكير كل 5 دقائق — أذكار العفو</p>
     <p class="azkar-text" id="azkar-text">أستغفر الله العظيم وأتوب إليه</p>
@@ -305,6 +296,26 @@ function playDeviceGreeting(phrase){
   }
 }
 
+
+/* المنتجات والتصنيفات تُقرأ من لوحة الإدارة على نفس الموقع */
+const STORE_KEY='ummalqura_manager_v1';
+let activeCategory='الكل';
+function loadStoreProducts(){try{const s=JSON.parse(localStorage.getItem(STORE_KEY)||'null');return s&&Array.isArray(s.products)?s.products:[]}catch(e){return []}}
+function renderPublicProducts(){
+ const host=document.getElementById('public-products'),filters=document.getElementById('category-filters');
+ if(!host||!filters)return;
+ const products=loadStoreProducts();
+ const cats=['الكل',...new Set(products.map(p=>p.category||'أخرى'))];
+ if(!cats.includes(activeCategory))activeCategory='الكل';
+ filters.innerHTML=cats.map(c=>'<button type="button" class="'+(c===activeCategory?'active':'')+'" data-category="'+c.replace(/&/g,'&amp;').replace(/"/g,'&quot;')+'">'+c+'</button>').join('');
+ filters.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{activeCategory=b.dataset.category;renderPublicProducts()}));
+ const shown=activeCategory==='الكل'?products:products.filter(p=>(p.category||'أخرى')===activeCategory);
+ host.innerHTML=shown.map(p=>'<article class="item" tabindex="0"><div class="product-icon" aria-hidden="true">🛒</div><div class="name">'+escapeProductText(p.name)+'</div><div class="detail">'+escapeProductText(p.category||'أخرى')+'</div><div class="price">'+Number(p.price||0).toLocaleString('en-US')+' <span class="currency">د.ع</span></div></article>').join('')||'<p class="empty-products">'+(products.length?'ماكو منتجات بهذا التصنيف حالياً.':'أضف المنتجات والتصنيفات من لوحة الإدارة حتى تظهر هنا.')+'</p>';
+}
+function escapeProductText(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+renderPublicProducts();
+window.addEventListener('storage',e=>{if(e.key===STORE_KEY)renderPublicProducts()});
+
 // النقر على بطاقة أي منتج ينطق اسمه وسعره.
 const productCards=document.querySelectorAll('.prices .item');
 productCards.forEach(card=>{
@@ -336,7 +347,7 @@ let priceReading=false;
 if(readPricesBtn)readPricesBtn.addEventListener('click',()=>{
   if(!window.speechSynthesis || !window.SpeechSynthesisUtterance){alert('فعّل خدمة تحويل النص إلى كلام من إعدادات الجهاز.');return;}
   if(priceReading || speechSynthesis.speaking){speechSynthesis.cancel();priceReading=false;readPricesBtn.textContent='🗣️ اقرأ الأسعار';return;}
-  const text='أهلاً وسهلاً بكم في ماركت أم القرى. بيض المائدة، الطبقة بستة آلاف دينار. زيت الطبخ، تسعمئة مل، بثلاثة آلاف دينار. السكر، الكيلو بألف وخمسمئة دينار. معجون جينو الصغير بألف ومئتين وخمسين دينار. معجون جينو الكبير بألفين وخمسمئة دينار. الإندومي، الواحدة بخمسمئة دينار، وثلاث حبات بألف دينار. حليب التونسا بثلاثة آلاف دينار. حفاظات الماس بثلاثة آلاف وسبعمئة وخمسين دينار. حفاظات هلا بيبي بأربعة آلاف دينار. تمن حصة، الكيلو بألف دينار. تمن بسمتي، الكيلو بألفين ومئتين وخمسين دينار. راشي الرحمة بأربعة آلاف دينار. نورتونا بزيارتكم.';
+  const text='أهلاً بكم في ماركت أم القرى. '+loadStoreProducts().map(p=>p.name+'، السعر '+Number(p.price||0)+' دينار عراقي').join('. ')+' . نورتونا بزيارتكم.';
   const u=new SpeechSynthesisUtterance(text);u.lang='ar';u.rate=.82;u.volume=1;
   u.onstart=()=>{priceReading=true;readPricesBtn.textContent='⏹ إيقاف قراءة الأسعار';};
   u.onend=()=>{priceReading=false;readPricesBtn.textContent='🗣️ اقرأ الأسعار';};
