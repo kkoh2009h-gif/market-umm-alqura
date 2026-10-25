@@ -154,10 +154,61 @@ h1:after,.heading:after{background:linear-gradient(90deg,transparent,#416b9c,#dc
 .category-filters button{font:inherit;font-size:clamp(12px,1.3vw,20px);padding:8px 14px;border:1px solid #d4b64c;border-radius:12px;background:#00345a;color:#fff;cursor:pointer}
 .category-filters button.active{background:#d4b64c;color:#07172a}
 .empty-products{grid-column:1/-1;text-align:center;color:#dce8f5;padding:24px;font-size:clamp(16px,2vw,28px)}
+
+/* El Clasico temporary interactive overlay */
+.clasico-launch{position:fixed;right:18px;bottom:18px;z-index:900;border:1px solid #d8b75a;border-radius:999px;padding:12px 18px;background:linear-gradient(135deg,#173e68,#06101e);color:#fff;font:800 16px Tahoma,Arial,sans-serif;box-shadow:0 5px 22px #0009,0 0 15px #d8b75a44;cursor:pointer}
+.clasico-modal{display:none;position:fixed;inset:0;z-index:2000;overflow:auto;background:radial-gradient(ellipse at top,#193c61,#050b14 75%);color:#fff;padding:16px}
+.clasico-modal.open{display:block}
+.clasico-shell{max-width:1400px;margin:auto}
+.clasico-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid #58799c;padding:8px 0 14px}
+.clasico-title{font-size:clamp(24px,4vw,48px);font-weight:1000;margin:0;color:#f4d37c}
+.clasico-sub{color:#dce7f5;margin:6px 0}
+.clasico-close,.clasico-tab{border:1px solid #7393b7;border-radius:10px;padding:9px 13px;background:#142b45;color:#fff;font:700 14px Tahoma,Arial,sans-serif;cursor:pointer}
+.clasico-hero{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;text-align:center;margin:18px 0;padding:18px;border:1px solid #456b94;border-radius:18px;background:linear-gradient(100deg,#fff1,#0000,#b3132b22)}
+.clasico-team{font-size:clamp(18px,2.6vw,30px);font-weight:900}.clasico-team small{display:block;font-size:12px;color:#d4e0ef;margin-top:5px}
+.clasico-vs{font-size:clamp(28px,5vw,56px);font-weight:1000;color:#f4d37c}
+.clasico-count{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:14px 0}
+.clasico-count span{min-width:75px;padding:10px 13px;border:1px solid #456b94;border-radius:12px;background:#07111f;font-size:clamp(19px,3vw,28px);font-weight:900}
+.clasico-count small{display:block;font-size:11px;color:#dce7f5;font-weight:500}
+.clasico-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.clasico-tab.active{background:#f4d37c;color:#07111f;border-color:#f4d37c}
+.clasico-content{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.clasico-team-panel{border:1px solid #456b94;border-radius:16px;padding:14px;background:#081522}
+.clasico-team-panel h3{margin:0 0 10px;font-size:20px}.clasico-team-panel p{color:#cbd8e8;font-size:13px}
+.clasico-formation{font-weight:900;color:#f4d37c}
+.clasico-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.clasico-player{border:1px solid #294967;border-radius:9px;padding:8px;background:#10243a;font-size:14px}
+.clasico-player b{color:#f4d37c;margin-left:5px}
+.clasico-source{font-size:12px;color:#b8cbe0;margin:14px 0 5px}
+@media(max-width:650px){.clasico-content{grid-template-columns:1fr}.clasico-hero{gap:8px;padding:12px}.clasico-launch{right:10px;bottom:10px;padding:10px 13px;font-size:14px}.clasico-modal{padding:10px}}
+
 </style>
 </head>
 <body>
 <main>
+
+<button type="button" class="clasico-launch" id="open-clasico">⚽ الكلاسيكو مباشر</button>
+<section class="clasico-modal" id="clasico-modal" role="dialog" aria-modal="true" aria-label="واجهة الكلاسيكو التفاعلية">
+ <div class="clasico-shell">
+  <div class="clasico-top"><div><h2 class="clasico-title">EL CLÁSICO</h2><p class="clasico-sub">الدوري الإسباني · الجولة العاشرة · 25 أكتوبر 2026</p></div><button type="button" class="clasico-close" id="close-clasico">إغلاق ✕</button></div>
+  <div class="clasico-hero">
+   <div class="clasico-team">ريال مدريد<small>REAL MADRID</small></div><div class="clasico-vs">VS</div><div class="clasico-team">برشلونة<small>FC BARCELONA</small></div>
+  </div>
+  <div style="text-align:center;color:#dce7f5">ملعب سبوتيفاي كامب نو · توقيت كركوك / بغداد</div>
+  <div class="clasico-count" id="clasico-countdown"><span>--<small>أيام</small></span><span>--<small>ساعات</small></span><span>--<small>دقائق</small></span><span>--<small>ثواني</small></span></div>
+  <div class="clasico-tabs"><button class="clasico-tab active" data-clasico-tab="lineups">التشكيلات</button><button class="clasico-tab" data-clasico-tab="matchinfo">معلومات المباراة</button></div>
+  <div id="clasico-lineups" class="clasico-content">
+   <article class="clasico-team-panel"><h3>⚪ ريال مدريد <span class="clasico-formation">4-2-3-1</span></h3><p>التشكيلة الأساسية المنشورة للمباراة</p><div class="clasico-list">
+    <div class="clasico-player"><b>1</b> أندري لونين</div><div class="clasico-player"><b>24</b> دينزل دومفريس</div><div class="clasico-player"><b>16</b> إبراهيم كوناتي</div><div class="clasico-player"><b>4</b> دين هويجسن</div><div class="clasico-player"><b>17</b> مارك كوكوريلا</div><div class="clasico-player"><b>8</b> فيديريكو فالفيردي</div><div class="clasico-player"><b>14</b> أوريلين تشواميني</div><div class="clasico-player"><b>15</b> أردا غولر</div><div class="clasico-player"><b>5</b> جود بيلينغهام</div><div class="clasico-player"><b>25</b> يان ديوماندي</div><div class="clasico-player"><b>10</b> كيليان مبابي</div>
+   </div><p><strong>المدرب:</strong> جوزيه مورينيو</p><p><strong>البدلاء:</strong> كورتوا، لونين، ميليتاو، روديغر، ترينت، كاريراس، كامافينغا، تياغو، برناردو سيلفا، إبراهيم دياز، إندريك، كارلوس إسبِي.</p></article>
+   <article class="clasico-team-panel"><h3>🔵🔴 برشلونة <span class="clasico-formation">4-2-3-1</span></h3><p>التشكيلة الأساسية المنشورة للمباراة</p><div class="clasico-list">
+    <div class="clasico-player"><b>1</b> خوان غارسيا</div><div class="clasico-player"><b>2</b> جواو كانسيلو</div><div class="clasico-player"><b>5</b> باو كوبارسي</div><div class="clasico-player"><b>18</b> جيرارد مارتين</div><div class="clasico-player"><b>3</b> أليخاندرو بالدي</div><div class="clasico-player"><b>16</b> رودري</div><div class="clasico-player"><b>8</b> بيدري</div><div class="clasico-player"><b>10</b> لامين يامال</div><div class="clasico-player"><b>7</b> فيرمين لوبيز</div><div class="clasico-player"><b>17</b> أنتوني غوردون</div><div class="clasico-player"><b>11</b> رافينيا</div>
+   </div><p><strong>المدرب:</strong> هانسي فليك</p><p><strong>البدلاء:</strong> تشيزني، ليفاكوفيتش، جافي، تشافي إسبارت، مارك بيرنال، غابرييل جيسوس، كريم أديمي، فرينكي دي يونغ، بريان فاريناس.</p></article>
+  </div>
+  <div id="clasico-matchinfo" class="clasico-team-panel" hidden><h3>معلومات المباراة</h3><p>🏆 البطولة: الدوري الإسباني — الجولة العاشرة</p><p>📅 التاريخ: الأحد 25 أكتوبر 2026</p><p>🕙 الموعد: 10:00 مساءً بتوقيت العراق (قد تتغير الحالة بعد بدء المباراة)</p><p>🏟️ الملعب: سبوتيفاي كامب نو — برشلونة</p><p>⏱️ العدّاد يتحدث تلقائياً، ويتحول إلى «حان موعد المباراة» عند وقت البداية.</p><p>التشكيلات المعروضة وفق بيانات منشورة قبل المباراة؛ قد تتغير عند التحديثات الرسمية.</p></div>
+  <p class="clasico-source">واجهة مؤقتة مدمجة داخل ماركت أم القرى. مصادر التشكيلات: <a href="https://elpais.com/deportes/resultados/futbol/primera/2026_2027/directo/regular-a-10-6a4496c62a79325/alineaciones/" target="_blank" rel="noopener">EL PAÍS</a> · <a href="https://www.laliga.com/en-ES/partidazos/el-clasico" target="_blank" rel="noopener">LaLiga</a></p>
+ </div>
+</section>
+
   <div class="baghdad-clock" aria-label="الوقت الحالي في بغداد">
     <span class="clock-label">توقيت بغداد</span>
     <span id="baghdad-time" class="clock-time">--:--:--</span>
@@ -207,7 +258,32 @@ h1:after,.heading:after{background:linear-gradient(90deg,transparent,#416b9c,#dc
   <div class="hours">أوقات الدوام: <strong>من 8 صباحاً إلى 1 ليلاً</strong></div>
   <div class="footer">نورتونا بزيارتكم • ماركت أم القرى</div>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+/* El Clasico overlay interactions */
+(function(){
+ const modal=document.getElementById('clasico-modal'),open=document.getElementById('open-clasico'),close=document.getElementById('close-clasico');
+ if(!modal||!open||!close)return;
+ open.addEventListener('click',()=>modal.classList.add('open'));
+ close.addEventListener('click',()=>modal.classList.remove('open'));
+ modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open')});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('open')});
+ document.querySelectorAll('[data-clasico-tab]').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('[data-clasico-tab]').forEach(b=>b.classList.toggle('active',b===btn));
+  document.getElementById('clasico-lineups').hidden=btn.dataset.clasicoTab!=='lineups';
+  document.getElementById('clasico-matchinfo').hidden=btn.dataset.clasicoTab!=='matchinfo';
+ }));
+ const target=new Date('2026-10-25T22:00:00+03:00');
+ function tick(){
+  const now=new Date(),diff=target-now,host=document.getElementById('clasico-countdown');
+  if(!host)return;
+  if(diff<=0){host.innerHTML='<span style="min-width:240px">حان موعد المباراة<small>تابع الحالة المباشرة</small></span>';return}
+  const d=Math.floor(diff/86400000),h=Math.floor(diff%86400000/3600000),m=Math.floor(diff%3600000/60000),s=Math.floor(diff%60000/1000);
+  host.innerHTML=[[d,'أيام'],[h,'ساعات'],[m,'دقائق'],[s,'ثواني']].map(([n,l])=>'<span>'+String(n).padStart(2,'0')+'<small>'+l+'</small></span>').join('');
+ }
+ tick();setInterval(tick,1000);
+})();
+
+</script>
 <script>
 function updateBaghdadClock(){
   const now=new Date();
