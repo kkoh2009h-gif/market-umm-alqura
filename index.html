@@ -155,6 +155,8 @@ h1:after,.heading:after{background:linear-gradient(90deg,transparent,#416b9c,#dc
 .category-filters button.active{background:#d4b64c;color:#07172a}
 .empty-products{grid-column:1/-1;text-align:center;color:#dce8f5;padding:24px;font-size:clamp(16px,2vw,28px)}
 
+.clasico-live{margin:12px 0 18px;border:1px solid #59799d;border-radius:15px;background:linear-gradient(130deg,#0c1b2d,#152a40);padding:14px;text-align:center}
+.clasico-live-label{color:#b9cbe0;font-size:.8rem}.clasico-scoreline{display:flex;justify-content:center;align-items:center;gap:18px;margin:8px 0}.clasico-scoreline strong{font-size:clamp(2rem,5vw,3.2rem);font-variant-numeric:tabular-nums}.clasico-live-state{color:#f4d37c;font-weight:900}.clasico-events{display:grid;gap:7px;margin-top:10px;text-align:right}.clasico-event{padding:8px 10px;border-radius:9px;background:#07111f;border:1px solid #29435f;font-size:.86rem}.clasico-live-muted{color:#b9cbe0;font-size:.8rem;margin-top:7px}
 /* El Clasico temporary interactive overlay */
 .clasico-launch{position:fixed;right:18px;bottom:18px;z-index:900;border:1px solid #d8b75a;border-radius:999px;padding:12px 18px;background:linear-gradient(135deg,#173e68,#06101e);color:#fff;font:800 16px Tahoma,Arial,sans-serif;box-shadow:0 5px 22px #0009,0 0 15px #d8b75a44;cursor:pointer}
 .clasico-modal{display:none;position:fixed;inset:0;z-index:2000;overflow:auto;background:radial-gradient(ellipse at top,#193c61,#050b14 75%);color:#fff;padding:16px}
@@ -230,6 +232,13 @@ h1:after,.heading:after{background:linear-gradient(90deg,transparent,#416b9c,#dc
   </div>
   <div style="text-align:center;color:#dce7f5">ملعب سبوتيفاي كامب نو · توقيت كركوك / بغداد</div>
   <div class="clasico-count" id="clasico-countdown"><span>--<small>أيام</small></span><span>--<small>ساعات</small></span><span>--<small>دقائق</small></span><span>--<small>ثواني</small></span></div>
+  <div class="clasico-live" aria-live="polite">
+   <div class="clasico-live-label">النتيجة المباشرة · تحديث تلقائي</div>
+   <div class="clasico-scoreline"><strong id="clasico-home-score">—</strong><span>:</span><strong id="clasico-away-score">—</strong></div>
+   <div class="clasico-live-state" id="clasico-live-state">جارٍ الاتصال بمصدر النتيجة…</div>
+   <div class="clasico-events" id="clasico-live-events"><div class="clasico-event">سيظهر هنا تسجيل الأهداف والبطاقات والتبديلات عند توفر البيانات.</div></div>
+   <div class="clasico-live-muted" id="clasico-live-updated">النتيجة والأحداث تعتمد على مزود بيانات خارجي.</div>
+  </div>
   <div class="clasico-tabs"><button class="clasico-tab active" data-clasico-tab="lineups">التشكيلات</button><button class="clasico-tab" data-clasico-tab="matchinfo">معلومات المباراة</button></div>
   <div id="clasico-lineups" class="clasico-content">
    <article class="clasico-team-panel"><h3><img class="clasico-crest" style="display:inline-block;vertical-align:middle;width:34px;height:34px;margin:0 0 0 8px" src="https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg" alt="شعار ريال مدريد"> ريال مدريد <span class="clasico-formation">4-2-3-1</span></h3><p>التشكيلة الأساسية المنشورة</p><div class="clasico-list">
@@ -515,6 +524,46 @@ setInterval(()=>{
 
 
 
+
+ /* التحديث المباشر للنتيجة والأحداث من ESPN */
+ async function refreshClasicoLive(){
+  const stateEl=document.getElementById('clasico-live-state');
+  const eventsEl=document.getElementById('clasico-live-events');
+  try{
+   const response=await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard?dates=20261025',{cache:'no-store'});
+   if(!response.ok)throw new Error('scoreboard unavailable');
+   const data=await response.json();
+   const events=Array.isArray(data.events)?data.events:[];
+   const match=events.find(ev=>{
+    const txt=((ev.name||'')+' '+(ev.shortName||'')+' '+(ev.competitions||[]).map(c=>(c.competitors||[]).map(t=>t.team?.displayName||t.team?.name||'').join(' ')).join(' ')).toLowerCase();
+    return txt.includes('barcelona')&&txt.includes('real madrid');
+   });
+   if(!match){stateEl.textContent='ما وصلتنا بيانات المباراة من المصدر حالياً.';return}
+   const comp=(match.competitions||[])[0]||{};
+   const teams=comp.competitors||[];
+   const barca=teams.find(t=>/barcelona/i.test((t.team?.displayName||'')+' '+(t.team?.name||'')));
+   const madrid=teams.find(t=>/real madrid/i.test((t.team?.displayName||'')+' '+(t.team?.name||'')));
+   document.getElementById('clasico-home-score').textContent=barca?.score??'0';
+   document.getElementById('clasico-away-score').textContent=madrid?.score??'0';
+   const st=comp.status||match.status||{},type=st.type||{};
+   const statusText=type.detail||type.shortDetail||type.description||'الحالة غير متاحة';
+   stateEl.textContent=(type.state==='in'?'🔴 مباشر · '+(st.displayClock||type.shortDetail||''):statusText);
+   const startTime=Date.parse(match.date||comp.date||'');
+   if(type.state==='in'&&startTime&&!st.displayClock){const mins=Math.max(1,Math.floor((Date.now()-startTime)/60000));stateEl.textContent='🔴 مباشر · '+mins+'′'}
+   let summary=null;
+   try{const sr=await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/summary?event='+encodeURIComponent(match.id),{cache:'no-store'});if(sr.ok)summary=await sr.json()}catch(_){}
+   const items=summary?.plays?.items||summary?.commentary?.items||summary?.keyEvents||[];
+   const rendered=items.slice(-12).reverse().map(item=>{
+    const minute=item.clock?.displayValue||item.time?.displayValue||item.period?.number&&('الشوط '+item.period.number)||'';
+    const typeName=item.type?.text||item.type?.name||item.text||item.shortText||'حدث';
+    const detail=item.text||item.shortText||item.description||typeName;
+    return '<div class="clasico-event">'+(minute?'<b>'+minute+'</b> · ':'')+String(detail).replace(/[<>]/g,'')+'</div>';
+   });
+   eventsEl.innerHTML=rendered.length?rendered.join(''):'<div class="clasico-event">ماكو أحداث منشورة من مزود البيانات حالياً؛ راح نتحقق تلقائياً مرة ثانية.</div>';
+   document.getElementById('clasico-live-updated').textContent='آخر تحقق: '+new Date().toLocaleTimeString('ar-IQ',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  }catch(e){stateEl.textContent='تعذّر جلب النتيجة حالياً؛ سيُعاد الاتصال تلقائياً.'}
+ }
+ refreshClasicoLive();setInterval(refreshClasicoLive,30000);
 
 /* واجهة الكلاسيكو التفاعلية */
 (()=>{
