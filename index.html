@@ -299,7 +299,7 @@ function playDeviceGreeting(phrase){
 
 
 const db=window.supabase.createClient("https://fuvvkddpnoqoduyslrwe.supabase.co","sb_publishable_6DN8M_kyiY-ASYdjLxMbmw_lsGqhABd");let activeCategory='الكل',cloudProducts=[];
-async function loadStoreProducts(){const {data,error}=await db.from('products').select('id,name,category,selling_price,is_active').eq('is_active',true).order('display_order').order('name');if(error){console.error(error);return null}return (data||[]).map(p=>({...p,category:p.category||'أخرى',price:+p.selling_price||0}))}
+async function loadStoreProducts(){const {data,error}=await db.from('products').select('id,name,category,selling_price,is_active').eq('is_active',true).order('name');if(error){console.error('Supabase products error:',error);return {__error:error.message}}return (data||[]).map(p=>({...p,category:p.category||'أخرى',price:+p.selling_price||0}))}
 function renderPublicProducts(){
  const host=document.getElementById('public-products'),filters=document.getElementById('category-filters');
  if(!host||!filters)return;
@@ -312,7 +312,7 @@ function renderPublicProducts(){
  host.innerHTML=shown.map(p=>'<article class="item" tabindex="0"><div class="product-icon" aria-hidden="true">🛒</div><div class="name">'+escapeProductText(p.name)+'</div><div class="detail">'+escapeProductText(p.category||'أخرى')+'</div><div class="price">'+Number(p.price||0).toLocaleString('en-US')+' <span class="currency">د.ع</span></div></article>').join('')||'<p class="empty-products">'+(products.length?'ماكو منتجات بهذا التصنيف حالياً.':'أضف المنتجات والتصنيفات من لوحة الإدارة حتى تظهر هنا.')+'</p>';
 }
 function escapeProductText(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-async function refreshProducts(){const p=await loadStoreProducts();if(p!==null){cloudProducts=p;renderPublicProducts()}}refreshProducts();setInterval(refreshProducts,3000);db.channel('products-live').on('postgres_changes',{event:'*',schema:'public',table:'products'},()=>refreshProducts()).subscribe();
+async function refreshProducts(){const p=await loadStoreProducts();if(p&&p.__error){const host=document.getElementById('public-products');if(host)host.innerHTML='<p class="empty-products">تعذّر تحميل المنتجات من قاعدة البيانات. افحص اتصال الإنترنت أو صلاحية العرض. ('+escapeProductText(p.__error)+')</p>';return}if(p!==null){cloudProducts=p;renderPublicProducts()}}refreshProducts();setInterval(refreshProducts,10000);db.channel('products-live').on('postgres_changes',{event:'*',schema:'public',table:'products'},()=>refreshProducts()).subscribe();
 
 // النقر على بطاقة أي منتج ينطق اسمه وسعره.
 const productCards=document.querySelectorAll('.prices .item');
@@ -345,7 +345,7 @@ let priceReading=false;
 if(readPricesBtn)readPricesBtn.addEventListener('click',()=>{
   if(!window.speechSynthesis || !window.SpeechSynthesisUtterance){alert('فعّل خدمة تحويل النص إلى كلام من إعدادات الجهاز.');return;}
   if(priceReading || speechSynthesis.speaking){speechSynthesis.cancel();priceReading=false;readPricesBtn.textContent='🗣️ اقرأ الأسعار';return;}
-  const text='أهلاً بكم في ماركت أم القرى. '+loadStoreProducts().map(p=>p.name+'، السعر '+Number(p.price||0)+' دينار عراقي').join('. ')+' . نورتونا بزيارتكم.';
+  const text='أهلاً بكم في ماركت أم القرى. '+cloudProducts.map(p=>p.name+'، السعر '+Number(p.price||0)+' دينار عراقي').join('. ')+' . نورتونا بزيارتكم.';
   const u=new SpeechSynthesisUtterance(text);u.lang='ar';u.rate=.82;u.volume=1;
   u.onstart=()=>{priceReading=true;readPricesBtn.textContent='⏹ إيقاف قراءة الأسعار';};
   u.onend=()=>{priceReading=false;readPricesBtn.textContent='🗣️ اقرأ الأسعار';};
