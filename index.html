@@ -259,7 +259,6 @@ h1:after,.heading:after{background:linear-gradient(90deg,transparent,#416b9c,#dc
       <p class="welcome">أهلاً وسهلاً بكم</p>
       <button type="button" id="welcome-audio-btn" class="welcome-audio-btn">🔊 تشغيل الترحيب</button>
       <button type="button" id="read-prices-btn" class="read-prices-btn">🗣️ اقرأ الأسعار</button>
-      <button type="button" id="open-clasico" class="clasico-launch-btn">⚽ الكلاسيكو — ريال مدريد × برشلونة</button>
     </div>
   </header>
   <h2 class="heading">أسعار المواد الأساسية</h2>
@@ -492,29 +491,34 @@ setInterval(()=>{
 
 
 
-/* Interactive Clasico match panel */
+/* واجهة الكلاسيكو التفاعلية */
 (()=>{
- const overlay=document.getElementById('clasico-overlay'),open=document.getElementById('open-clasico'),close=document.getElementById('close-clasico');
+ const overlay=document.getElementById('clasico-modal');
+ const open=document.getElementById('open-clasico');
+ const close=document.getElementById('close-clasico');
  if(!overlay||!open||!close)return;
- const realXI=[['كورتوا','حارس'],['دومفريس','ظهير'],['كوناتي','قلب دفاع'],['هويسن','قلب دفاع'],['كوكوريلا','ظهير'],['تشواميني','وسط'],['غولر','وسط'],['فالفيردي','وسط'],['مبابي','هجوم'],['بيلينغهام','هجوم'],['ديوماندي','هجوم']];
- const barcaXI=[['خوان غارسيا','حارس'],['كانسيلو','دفاع'],['بالدي','دفاع'],['كوبارسي','دفاع'],['جيرارد مارتن','دفاع'],['بيدري','وسط'],['رودريغو','وسط'],['لامين يامال','هجوم'],['رافينيا','هجوم'],['فيرمين','هجوم'],['أنتوني غوردون','هجوم']];
- const realBench=['تياغو','ترينت ألكسندر-أرنولد','لونين','كاريراس','روديغر','كامافينغا','خافي نافارو','ميليتاو','برناردو سيلفا','براهيم','كارلوس إسبّي','إندريك'];
- const barcaBench=['تشيزني','دومينيك ليفاكوفيتش','غافي','تشافي إسبارت','مارك بيرنال','غابرييل جيسوس','كريم أديمي','دي يونغ','برايان فارينياس'];
- function renderXI(id,arr){document.getElementById(id).innerHTML=arr.map((p,i)=>'<div class="clasico-player"><i>'+(i===0?'ح':i+1)+'</i><span>'+p[0]+'</span><small>'+p[1]+'</small></div>').join('')}
- renderXI('real-lineup',realXI);renderXI('barca-lineup',barcaXI);
+ const kickoff=new Date('2026-10-25T23:00:00+03:00').getTime();
+ function updateCountdown(){
+   const el=document.getElementById('clasico-countdown'); if(!el)return;
+   const diff=kickoff-Date.now();
+   if(diff<=0){el.innerHTML='<span>بدأ الموعد<small>المباراة</small></span>';return}
+   const vals=[Math.floor(diff/86400000),Math.floor(diff%86400000/3600000),Math.floor(diff%3600000/60000),Math.floor(diff%60000/1000)];
+   const labels=['أيام','ساعات','دقائق','ثواني'];
+   el.innerHTML=vals.map((v,i)=>'<span>'+String(v).padStart(2,'0')+'<small>'+labels[i]+'</small></span>').join('');
+ }
  function showTab(tab){
-  document.querySelectorAll('[data-clasico-tab]').forEach(b=>b.classList.toggle('active',b.dataset.clasicoTab===tab));
-  const host=document.getElementById('clasico-content');
-  if(tab==='lineups'){host.innerHTML='<article class="clasico-card"><h3>⚪ تشكيلة ريال مدريد</h3><p class="clasico-formation">4-2-3-1 · قائمة منشورة</p><div class="clasico-pitch" id="real-lineup"></div></article><article class="clasico-card"><h3>🔵🔴 تشكيلة برشلونة</h3><p class="clasico-formation">قائمة منشورة</p><div class="clasico-pitch" id="barca-lineup"></div></article>';renderXI('real-lineup',realXI);renderXI('barca-lineup',barcaXI)}
-  if(tab==='bench'){host.innerHTML='<article class="clasico-card"><h3>⚪ بدلاء ريال مدريد</h3><div class="clasico-bench">'+realBench.map(x=>'<span>'+x+'</span>').join('')+'</div></article><article class="clasico-card"><h3>🔵🔴 بدلاء برشلونة</h3><div class="clasico-bench">'+barcaBench.map(x=>'<span>'+x+'</span>').join('')+'</div></article>'}
-  if(tab==='info'){host.innerHTML='<article class="clasico-card"><h3>معلومات المباراة</h3><p>🏆 الدوري الإسباني — الجولة العاشرة</p><p>📅 الأحد 25 أكتوبر 2026</p><p>🕚 11:00 مساءً بتوقيت بغداد</p><p>🏟️ سبوتيفاي كامب نو — برشلونة</p></article><article class="clasico-card"><h3>روابط المتابعة</h3><p><a href="https://www.laliga.com/en-GB/partidazos/el-clasico" target="_blank" rel="noopener">الموقع الرسمي للدوري الإسباني</a></p><p><a href="https://www.fcbarcelona.com/en/matches/138374/fc-barcelona-real-madrid-la-liga-2026-2027" target="_blank" rel="noopener">صفحة المباراة الرسمية</a></p></article>'}
+   const lineups=document.getElementById('clasico-lineups'),info=document.getElementById('clasico-matchinfo');
+   if(lineups)lineups.hidden=tab!=='lineups';
+   if(info)info.hidden=tab!=='matchinfo';
+   document.querySelectorAll('[data-clasico-tab]').forEach(b=>b.classList.toggle('active',b.dataset.clasicoTab===tab));
  }
  document.querySelectorAll('[data-clasico-tab]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.clasicoTab)));
- function updateCountdown(){const el=document.getElementById('clasico-count');if(!el)return;const kickoff=new Date('2026-10-25T23:00:00+03:00').getTime(),diff=kickoff-Date.now();if(diff<=0){el.textContent='حان موعد المباراة';return}const d=Math.floor(diff/86400000),h=Math.floor(diff%86400000/3600000),m=Math.floor(diff%3600000/60000),s=Math.floor(diff%60000/1000);el.textContent=(d?d+' يوم · ':'')+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
- setInterval(updateCountdown,1000);updateCountdown();
- function show(){overlay.classList.add('open');document.body.style.overflow='hidden';showTab('lineups')}
+ function show(){overlay.classList.add('open');document.body.style.overflow='hidden';showTab('lineups');updateCountdown()}
  function hide(){overlay.classList.remove('open');document.body.style.overflow=''}
- open.addEventListener('click',show);close.addEventListener('click',hide);overlay.addEventListener('click',e=>{if(e.target===overlay)hide()});document.addEventListener('keydown',e=>{if(e.key==='Escape')hide()});
+ open.addEventListener('click',show);close.addEventListener('click',hide);
+ overlay.addEventListener('click',e=>{if(e.target===overlay)hide()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')hide()});
+ updateCountdown();setInterval(updateCountdown,1000);
 })();
 
 </script>
