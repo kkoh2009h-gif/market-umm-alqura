@@ -181,6 +181,37 @@ h1:after,.heading:after{background:linear-gradient(90deg,transparent,#416b9c,#dc
 .clasico-source{font-size:12px;color:#b8cbe0;margin:14px 0 5px}
 @media(max-width:650px){.clasico-content{grid-template-columns:1fr}.clasico-hero{gap:8px;padding:12px}.clasico-launch{right:10px;bottom:10px;padding:10px 13px;font-size:14px}.clasico-modal{padding:10px}}
 
+
+/* El Clasico interactive overlay */
+.clasico-launch-btn{margin-top:6px;border:1px solid #e7c56a;border-radius:999px;padding:7px 14px;background:linear-gradient(100deg,#5b171e,#111d35 48%,#123f78);color:#fff;font:800 .82rem Tahoma,Arial,sans-serif;cursor:pointer;box-shadow:0 0 14px #e7c56a22}
+.clasico-overlay{display:none;position:fixed;inset:0;z-index:2000;overflow:auto;background:radial-gradient(ellipse at top,#172e4b,#040914 70%);color:#fff;padding:clamp(12px,2vw,28px)}
+.clasico-overlay.open{display:block}
+.clasico-shell{max-width:1500px;margin:0 auto}
+.clasico-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid #526b8a;padding-bottom:12px}
+.clasico-title{font-size:clamp(1.3rem,3vw,2.4rem);font-weight:900;margin:0}
+.clasico-close{border:1px solid #6f89aa;background:#14243a;color:white;border-radius:10px;padding:9px 15px;font:inherit;cursor:pointer}
+.clasico-sub{color:#b9cbe0;margin:6px 0 0;font-size:clamp(.8rem,1.3vw,1rem)}
+.clasico-matchbar{display:grid;grid-template-columns:1fr minmax(180px,.8fr) 1fr;gap:12px;align-items:center;margin:16px 0}
+.clasico-team{border:1px solid #486587;border-radius:16px;padding:14px;background:linear-gradient(145deg,#1b304a,#0a1321);text-align:center}
+.clasico-team.real{border-bottom:3px solid #f1c75b}.clasico-team.barca{border-bottom:3px solid #3999ff}
+.clasico-team strong{display:block;font-size:clamp(1rem,2.2vw,1.8rem)}.clasico-team span{color:#c8d7e9;font-size:.9rem}
+.clasico-vs{text-align:center}.clasico-vs b{display:block;font-size:clamp(2rem,5vw,4rem);font-weight:1000;background:linear-gradient(90deg,#f5d36b,#fff,#75b9ff);background-clip:text;color:transparent}
+.clasico-count{font-variant-numeric:tabular-nums;font-size:clamp(1rem,2vw,1.5rem);font-weight:900;margin-top:4px}.clasico-kick{font-size:.85rem;color:#c7d7eb;margin-top:4px}
+.clasico-tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0}
+.clasico-tabs button{border:1px solid #587393;border-radius:999px;padding:9px 16px;background:#101d30;color:#e8f1ff;font:700 .9rem Tahoma,Arial,sans-serif;cursor:pointer}
+.clasico-tabs button.active{background:#e6eef8;color:#0a1727}
+.clasico-content{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.clasico-card{border:1px solid #344e6e;border-radius:16px;background:#0a1422eF;padding:14px;min-width:0}
+.clasico-card h3{margin:0 0 10px;font-size:clamp(1rem,1.7vw,1.35rem)}
+.clasico-formation{color:#a9c9e9;font-size:.85rem;margin:-4px 0 12px}
+.clasico-pitch{background:linear-gradient(180deg,#164c3d,#0a3028);border:1px solid #44836d;border-radius:12px;padding:12px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;min-height:220px}
+.clasico-player{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-align:center;background:#061a19aa;border:1px solid #7eb6a055;border-radius:9px;padding:7px 3px;font-size:clamp(.7rem,1.05vw,.95rem);font-weight:700;overflow-wrap:anywhere}
+.clasico-player i{font-style:normal;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#f4f8ff;color:#0d2639;font-size:.78rem;font-weight:900}
+.clasico-player small{font-size:.68rem;color:#c8e5d9}
+.clasico-bench{display:flex;flex-wrap:wrap;gap:7px}.clasico-bench span{padding:8px 10px;border:1px solid #344e6e;border-radius:8px;background:#14243a;font-size:.85rem}
+.clasico-foot{text-align:center;color:#8fa7c4;font-size:.76rem;margin:14px 0 4px;line-height:1.7}
+@media(max-width:700px){.clasico-matchbar{grid-template-columns:1fr 1fr}.clasico-vs{grid-column:1/-1;grid-row:1}.clasico-content{grid-template-columns:1fr}.clasico-pitch{min-height:0}.clasico-player{font-size:.8rem}}
+
 </style>
 </head>
 <body>
@@ -228,6 +259,7 @@ h1:after,.heading:after{background:linear-gradient(90deg,transparent,#416b9c,#dc
       <p class="welcome">أهلاً وسهلاً بكم</p>
       <button type="button" id="welcome-audio-btn" class="welcome-audio-btn">🔊 تشغيل الترحيب</button>
       <button type="button" id="read-prices-btn" class="read-prices-btn">🗣️ اقرأ الأسعار</button>
+      <button type="button" id="open-clasico" class="clasico-launch-btn">⚽ الكلاسيكو — ريال مدريد × برشلونة</button>
     </div>
   </header>
   <h2 class="heading">أسعار المواد الأساسية</h2>
@@ -458,6 +490,32 @@ setInterval(()=>{
 },5*60*1000);
 
 
+
+
+/* Interactive Clasico match panel */
+(()=>{
+ const overlay=document.getElementById('clasico-overlay'),open=document.getElementById('open-clasico'),close=document.getElementById('close-clasico');
+ if(!overlay||!open||!close)return;
+ const realXI=[['كورتوا','حارس'],['دومفريس','ظهير'],['كوناتي','قلب دفاع'],['هويسن','قلب دفاع'],['كوكوريلا','ظهير'],['تشواميني','وسط'],['غولر','وسط'],['فالفيردي','وسط'],['مبابي','هجوم'],['بيلينغهام','هجوم'],['ديوماندي','هجوم']];
+ const barcaXI=[['خوان غارسيا','حارس'],['كانسيلو','دفاع'],['بالدي','دفاع'],['كوبارسي','دفاع'],['جيرارد مارتن','دفاع'],['بيدري','وسط'],['رودريغو','وسط'],['لامين يامال','هجوم'],['رافينيا','هجوم'],['فيرمين','هجوم'],['أنتوني غوردون','هجوم']];
+ const realBench=['تياغو','ترينت ألكسندر-أرنولد','لونين','كاريراس','روديغر','كامافينغا','خافي نافارو','ميليتاو','برناردو سيلفا','براهيم','كارلوس إسبّي','إندريك'];
+ const barcaBench=['تشيزني','دومينيك ليفاكوفيتش','غافي','تشافي إسبارت','مارك بيرنال','غابرييل جيسوس','كريم أديمي','دي يونغ','برايان فارينياس'];
+ function renderXI(id,arr){document.getElementById(id).innerHTML=arr.map((p,i)=>'<div class="clasico-player"><i>'+(i===0?'ح':i+1)+'</i><span>'+p[0]+'</span><small>'+p[1]+'</small></div>').join('')}
+ renderXI('real-lineup',realXI);renderXI('barca-lineup',barcaXI);
+ function showTab(tab){
+  document.querySelectorAll('[data-clasico-tab]').forEach(b=>b.classList.toggle('active',b.dataset.clasicoTab===tab));
+  const host=document.getElementById('clasico-content');
+  if(tab==='lineups'){host.innerHTML='<article class="clasico-card"><h3>⚪ تشكيلة ريال مدريد</h3><p class="clasico-formation">4-2-3-1 · قائمة منشورة</p><div class="clasico-pitch" id="real-lineup"></div></article><article class="clasico-card"><h3>🔵🔴 تشكيلة برشلونة</h3><p class="clasico-formation">قائمة منشورة</p><div class="clasico-pitch" id="barca-lineup"></div></article>';renderXI('real-lineup',realXI);renderXI('barca-lineup',barcaXI)}
+  if(tab==='bench'){host.innerHTML='<article class="clasico-card"><h3>⚪ بدلاء ريال مدريد</h3><div class="clasico-bench">'+realBench.map(x=>'<span>'+x+'</span>').join('')+'</div></article><article class="clasico-card"><h3>🔵🔴 بدلاء برشلونة</h3><div class="clasico-bench">'+barcaBench.map(x=>'<span>'+x+'</span>').join('')+'</div></article>'}
+  if(tab==='info'){host.innerHTML='<article class="clasico-card"><h3>معلومات المباراة</h3><p>🏆 الدوري الإسباني — الجولة العاشرة</p><p>📅 الأحد 25 أكتوبر 2026</p><p>🕚 11:00 مساءً بتوقيت بغداد</p><p>🏟️ سبوتيفاي كامب نو — برشلونة</p></article><article class="clasico-card"><h3>روابط المتابعة</h3><p><a href="https://www.laliga.com/en-GB/partidazos/el-clasico" target="_blank" rel="noopener">الموقع الرسمي للدوري الإسباني</a></p><p><a href="https://www.fcbarcelona.com/en/matches/138374/fc-barcelona-real-madrid-la-liga-2026-2027" target="_blank" rel="noopener">صفحة المباراة الرسمية</a></p></article>'}
+ }
+ document.querySelectorAll('[data-clasico-tab]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.clasicoTab)));
+ function updateCountdown(){const el=document.getElementById('clasico-count');if(!el)return;const kickoff=new Date('2026-10-25T23:00:00+03:00').getTime(),diff=kickoff-Date.now();if(diff<=0){el.textContent='حان موعد المباراة';return}const d=Math.floor(diff/86400000),h=Math.floor(diff%86400000/3600000),m=Math.floor(diff%3600000/60000),s=Math.floor(diff%60000/1000);el.textContent=(d?d+' يوم · ':'')+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
+ setInterval(updateCountdown,1000);updateCountdown();
+ function show(){overlay.classList.add('open');document.body.style.overflow='hidden';showTab('lineups')}
+ function hide(){overlay.classList.remove('open');document.body.style.overflow=''}
+ open.addEventListener('click',show);close.addEventListener('click',hide);overlay.addEventListener('click',e=>{if(e.target===overlay)hide()});document.addEventListener('keydown',e=>{if(e.key==='Escape')hide()});
+})();
 
 </script>
 </body>
